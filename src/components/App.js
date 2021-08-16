@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 import { Provider, useDispatch, useSelector } from 'react-redux'
-import store from '../store/store'
+// import store from '../store/store'
 import { changeUsernameInput, changePasswordInput, setLoggedInUser } from '../store/reducers/reducerSlice'
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
@@ -75,13 +75,5 @@ function App() {
     </>
   );
 }
-
-// export default () => (
-//   <Provider store={store}>
-//     <App>
-
-//     </App>
-//   </Provider>
-// )
 
 export default App;
