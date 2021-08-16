@@ -2,7 +2,8 @@
 import './App.css';
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import store from '../store/store'
-import { changeUsernameInput, changePasswordInput } from '../store/reducers/reducerSlice'
+import { changeUsernameInput, changePasswordInput, setLoggedInUser } from '../store/reducers/reducerSlice'
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import Login from "./Login";
@@ -16,6 +17,7 @@ function App() {
   const dispatch = useDispatch();
   const usernameInput = useSelector(state => state.usernameInput)
   const passwordInput = useSelector(state => state.passwordInput)
+  const loggedInUser = useSelector(state => state.loggedInUser)
 
   const handleUsernameChange = (e) => {
     console.log(e)
@@ -33,6 +35,17 @@ function App() {
     e.preventDefault()
     console.log (usernameInput, passwordInput)
   }
+
+  useEffect(() => {
+    fetch("http://localhost:3000/me").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => setLoggedInUser(user))
+        // r.json().then((user) => console.log(user))
+      }
+    })
+  }, []);
+
+  if (!loggedInUser) return <Login></Login>
 
   return (
     <>
@@ -63,12 +76,12 @@ function App() {
   );
 }
 
-export default () => (
-  <Provider store={store}>
-    <App>
+// export default () => (
+//   <Provider store={store}>
+//     <App>
 
-    </App>
-  </Provider>
-)
+//     </App>
+//   </Provider>
+// )
 
-// export default App;
+export default App;

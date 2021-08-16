@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const slice = createSlice({
     name: 'global',
     initialState: {
+        loggedInUser: null,
         usernameInput: "",
         passwordInput: ""
     },
@@ -13,15 +14,18 @@ const slice = createSlice({
         },
         changePasswordInput: (state, action) => {
             state.passwordInput = action.payload
+        },
+        setLoggedInUser: (state, action) => {
+            state.loggedInUser = action.payload
         }
     }
 })
 
 //actions
-const { changeUsernameInput, changePasswordInput } = slice.actions
+const { changeUsernameInput, changePasswordInput, setLoggedInUser } = slice.actions
 
 //exports
-export { changeUsernameInput, changePasswordInput }
+export { changeUsernameInput, changePasswordInput, setLoggedInUser }
 export default slice.reducer
 
 // V Original walkthrough from Joe below
