@@ -37,14 +37,17 @@ function NavBar() {
           <div>
             <Link to="/" >Home</Link>
           </div>
-          <div>  
-              <>
-              <Link to="/profile" >My Profile</Link>
-              <Link to="/chart">My Chart</Link>
-              {/* <Link to="/schedule">Schedule</Link> */}
-              <Link to="/library">Tarot Library</Link>
-              <button onClick={handleLogoutClick}>Logout</button>
-              </>
+          <div>
+            <Link to="/profile" >My Profile</Link>
+          </div>
+          <div>
+            <Link to="/chart">My Chart</Link>
+          </div>
+          <div>
+            <Link to="/library">Tarot Library</Link>
+          </div>
+          <div>
+            <button onClick={handleLogoutClick}>Logout</button> 
           </div>
         </header>
       );
