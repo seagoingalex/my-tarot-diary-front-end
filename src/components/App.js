@@ -1,7 +1,8 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import { Provider, useDispatch, useSelector } from 'react-redux'
-import { store } from './store'
+import store from '../store/store'
+import { changeUsernameInput, changePasswordInput } from '../store/reducers/reducerSlice'
 
 function App() {
   const dispatch = useDispatch();
@@ -10,12 +11,14 @@ function App() {
 
   const handleUsernameChange = (e) => {
     console.log(e)
-    dispatch({ type: "CHANGE_USERNAME_INPUT", payload: e.target.value })
+    dispatch(changeUsernameInput(e.target.value))
+    // dispatch({ type: "CHANGE_USERNAME_INPUT", payload: e.target.value })
   }
 
   const handlePasswordChange = (e) => {
     console.log(e)
-    dispatch({ type: "CHANGE_PASSWORD_INPUT", payload: e.target.value })
+    dispatch(changePasswordInput(e.target.value))
+    // dispatch({ type: "CHANGE_PASSWORD_INPUT", payload: e.target.value })
   }
 
   const handleSubmit = (e) => {
@@ -30,7 +33,7 @@ function App() {
       </input>
       <input type="text" onChange={handlePasswordChange}>
       </input>
-      <input type="submit" value="Submit"></input>>
+      <input type="submit" value="Submit"></input>
     </form>
     </>
   );
