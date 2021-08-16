@@ -2,8 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom"
 // import styled from "styled-components";
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoggedInUser } from '../store/reducers/reducerSlice'
 
 function NavBar() {
+    const dispatch = useDispatch();
+    const loggedInUser = useSelector(state => state.loggedInUser)
     
     const history = useHistory();
 
@@ -18,9 +22,11 @@ function NavBar() {
     //   };
     
     function handleLogoutClick() {
-        fetch("/logout", { method: "DELETE" }).then((r) => {
+        fetch("http://localhost:3000/logout", { method: "DELETE" }).then((r) => {
             if (r.ok) {
                 // setUser(null)
+                dispatch(setLoggedInUser(null))
+                console.log("Successfully logged out!")
                 history.push("/")
             }
         });
