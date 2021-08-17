@@ -7,6 +7,7 @@ import { changeUsernameInput, changePasswordInput, setLoggedInUser } from '../st
 function SignUpForm() {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
+    const [email, setEmail] = useState("")
     
     const dispatch = useDispatch();
     const usernameInput = useSelector(state => state.usernameInput)
@@ -45,6 +46,7 @@ function SignUpForm() {
                 body: JSON.stringify({
                     first_name: firstName,
                     last_name: lastName,
+                    email: email,
                     username: usernameInput,
                     password: passwordInput
                 })
@@ -70,6 +72,8 @@ function SignUpForm() {
             <input type="text" onChange={(e) => setFirstName(e.target.value)}>
             </input>
             <input type="text" onChange={(e) => setLastName(e.target.value)}>
+            </input>
+            <input type="text" onChange={(e) => setEmail(e.target.value)}>
             </input>
             <input type="text" onChange={handleUsernameChange}>
             </input>
