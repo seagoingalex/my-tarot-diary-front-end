@@ -1,4 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"; 
+
+// async actions
+
+export const fetchCards = createAsyncThunk("global/fetchCards", () => {
+    // return a Promise containing the data we want
+    return fetch("http://localhost:3000/cards")
+        .then((response) => response.json())
+        .then((data) => data)
+})
 
 //slice
 const slice = createSlice({
@@ -6,7 +15,9 @@ const slice = createSlice({
     initialState: {
         loggedInUser: null,
         usernameInput: "",
-        passwordInput: ""
+        passwordInput: "",
+        entities: [],
+        status: "idle"
     },
     reducers: {
         changeUsernameInput: (state, action) => {
@@ -18,7 +29,16 @@ const slice = createSlice({
         setLoggedInUser: (state, action) => {
             state.loggedInUser = action.payload
         }
-    }
+    },
+    extraReducers: {
+        [fetchCards.pending](state) {
+            state.status = "loading";
+        },
+        [fetchCards.fulfilled](state, action) {
+            state.entities = action.payload;
+            state.status = "idle";
+        },
+    },
 })
 
 //actions

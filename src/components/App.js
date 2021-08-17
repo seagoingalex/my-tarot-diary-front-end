@@ -12,6 +12,8 @@ import Home from "./Home";
 import Profile from "./Profile";
 import Chart from "./Chart";
 import CardList from "./CardList";
+import Cards from "./Cards";
+import CardView from "./CardView";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,8 +62,13 @@ function App() {
       <Route path="/chart">
         <Chart></Chart>
       </Route>
-      <Route path="/library">
-        <CardList></CardList>
+      <Route exact path="/library">
+        <Cards></Cards>
+        {/* <CardList></CardList> */}
+      </Route>
+      <Route path="/library/:id">
+        <CardView></CardView>
+        {/* <CardList></CardList> */}
       </Route>
     </Switch>
 
