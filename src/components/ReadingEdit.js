@@ -2,27 +2,43 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom"
 
 function ReadingEdit() {
-    const [reading, setReading] = useState(null);
+    // const [reading, setReading] = useState(null);
+    const [reading, setReading] = useState({ rating: "", descriptors: "", notes: "" });
     const { id } = useParams()
 
     const history = useHistory();
 
-    const [rating, setRating] = useState("")
-    const [descriptors, setDescriptors] = useState("")
-    const [notes, setNotes] = useState("")
+    // const [rating, setRating] = useState(reading.rating)
+    // const [descriptors, setDescriptors] = useState(reading.descriptors)
+    // const [notes, setNotes] = useState(reading.notes)
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:3000/readings/${id}`)
             .then(r => r.json())
-            .then(data => 
-                setReading(data) &&
-                setRating(data.rating) &&
-                setDescriptors(data.descriptors) &&
-                setNotes(data.notes)
-            )
+            .then(data => {
+                setReading(data)
+                // setRating(data.rating)
+                // setDescriptors(data.descriptors)
+                // setNotes(data.notes)
+            })
+                
+            // )
             // .then(data => console.log(data))
-    }, [id])
+    }, [])
+
+
+    // useEffect(() => {
+    //     fetch(`http://localhost:3000/readings/${id}`)
+    //         .then(r => r.json())
+    //         .then(data => setReading({ rating: data.rating, descriptors: data.descriptors, notes: data.notes }))
+    //             // setReading(data) &&
+    //             // setRating(data.rating) &&
+    //             // setDescriptors(data.descriptors) &&
+    //             // setNotes(data.notes)
+    //         // )
+    //         // .then(data => console.log(data))
+    // }, [])
 
     function handleReadingUpdate(e) {
         e.preventDefault();
@@ -34,11 +50,7 @@ function ReadingEdit() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    rating: rating,
-                    descriptors: descriptors,
-                    notes: notes
-                })
+                body: JSON.stringify(reading)
             })
 
             if(res.ok) {
@@ -52,17 +64,21 @@ function ReadingEdit() {
         readingSave();
     }
 
+    function handleChange(e) {
+        setReading({ ...reading, [e.target.name]: e.target.value})
+    }
+
     if (!reading) return <h2>Loading...</h2>
 
     return (
         <>
         <h1>This is the Reading Edit component.</h1>
         <form onSubmit={handleReadingUpdate}>
-            <input type="text" value={rating} onChange={(e) => setRating(e.target.value)}>
+            <input type="text" name="rating" value={reading.rating} onChange={handleChange}>
             </input>
-            <input type="text" value={descriptors} onChange={(e) => setDescriptors(e.target.value)}>
+            <input type="text" name="descriptors" value={reading.descriptors} onChange={handleChange}>
             </input>
-            <input type="text" value={notes} onChange={(e) => setNotes(e.target.value)}>
+            <input type="text" name="notes" value={reading.notes} onChange={handleChange}>
             </input>
             <input type="submit" value={isLoading ? "Loading..." : "Save"}></input>
         </form>
