@@ -59,7 +59,10 @@ function App() {
       <Route path="/profile">
         <Profile></Profile>
       </Route>
-      <Route path="/chart">
+      <Route exact path="/chart">
+        <Chart></Chart>
+      </Route>
+      <Route path="/chart/:id">
         <Chart></Chart>
       </Route>
       <Route exact path="/library">
