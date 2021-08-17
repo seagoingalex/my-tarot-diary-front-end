@@ -42,6 +42,18 @@
   justify-content: center;
 }
 
+.library-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1 0 21%;
+  margin: 5px;
+  height: 100px;
+}
+
 .undrawn-card {
   width: 25%;
   height: 25%;

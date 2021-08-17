@@ -12,6 +12,7 @@ import Home from "./Home";
 import Profile from "./Profile";
 import Chart from "./Chart";
 import CardList from "./CardList";
+import Cards from "./Cards";
 
 function App() {
   const dispatch = useDispatch();
@@ -61,7 +62,8 @@ function App() {
         <Chart></Chart>
       </Route>
       <Route path="/library">
-        <CardList></CardList>
+        <Cards></Cards>
+        {/* <CardList></CardList> */}
       </Route>
     </Switch>
 
