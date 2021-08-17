@@ -14,6 +14,7 @@ import Chart from "./Chart";
 import CardList from "./CardList";
 import Cards from "./Cards";
 import CardView from "./CardView";
+import ReadingView from "./ReadingView";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ function App() {
         <Chart></Chart>
       </Route>
       <Route path="/chart/:id">
-        <Chart></Chart>
+        <ReadingView></ReadingView>
       </Route>
       <Route exact path="/library">
         <Cards></Cards>
