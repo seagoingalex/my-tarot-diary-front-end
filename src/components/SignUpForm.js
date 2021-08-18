@@ -69,15 +69,15 @@ function SignUpForm() {
         <>
         <h1>This is the Log In Form component.</h1>
         <form onSubmit={handleSubmit}>
-            <input type="text" onChange={(e) => setFirstName(e.target.value)}>
+            <input type="text" placeholder="first name" onChange={(e) => setFirstName(e.target.value)}>
             </input>
-            <input type="text" onChange={(e) => setLastName(e.target.value)}>
+            <input type="text" placeholder="last name" onChange={(e) => setLastName(e.target.value)}>
             </input>
-            <input type="text" onChange={(e) => setEmail(e.target.value)}>
+            <input type="text" placeholder="email" onChange={(e) => setEmail(e.target.value)}>
             </input>
-            <input type="text" onChange={handleUsernameChange}>
+            <input type="text" placeholder="username" onChange={handleUsernameChange}>
             </input>
-            <input type="text" onChange={handlePasswordChange}>
+            <input type="text" placeholder="password" onChange={handlePasswordChange}>
             </input>
             <input type="submit" value={isLoading ? "Loading..." : "Sign Up"}></input>
         </form>

@@ -57,9 +57,9 @@ function LoginForm() {
         <>
         <h1>This is the Log In Form component.</h1>
         <form onSubmit={handleSubmit}>
-            <input type="text" onChange={handleUsernameChange}>
+            <input type="text" placeholder="username" onChange={handleUsernameChange}>
             </input>
-            <input type="text" onChange={handlePasswordChange}>
+            <input type="text" placeholder="password" onChange={handlePasswordChange}>
             </input>
             <input type="submit" value={isLoading ? "Loading..." : "Login"}></input>
         </form>
