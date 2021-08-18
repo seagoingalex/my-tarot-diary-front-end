@@ -19,9 +19,14 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import avatar from "../images/icons/sign-in-icon-3.png"
+
 const useStyles = makeStyles((theme) => ({
+    root: {
+      height: '100vh',
+    },
     paper: {
-      marginTop: theme.spacing(8),
+      margin: theme.spacing(4, 4),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -31,12 +36,38 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.secondary.main,
     },
     form: {
+      '& label.Mui-focused': {
+        color: 'black',
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: 'black',
+        },
+        '&:hover fieldset': {
+          borderColor: 'black',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: 'black',
+        },
+      },
       width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(2),
+      color: "black",
+      focused: "black",
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      backgroundColor: "black",
+      color: "white",
     },
+    large: {
+        width: theme.spacing(15),
+        height: theme.spacing(15),
+        marginBottom: theme.spacing(2)
+    },
+    hyperlink: {
+        color: "black"
+    }
   }));
   
 
@@ -109,9 +140,7 @@ function SignUpForm() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-                </Avatar>
+            <Avatar src={avatar} className={classes.large} ></Avatar>
                 <Typography component="h1" variant="h5">
                 Sign up
                 </Typography>
@@ -197,7 +226,7 @@ function SignUpForm() {
                 </Button>
                 <Grid container justifyContent="flex-end">
                     <Grid item>
-                    <Link href="/" variant="body2">
+                    <Link href="/" variant="body2" className={classes.hyperlink}>
                         Already have an account? Sign in
                     </Link>
                     </Grid>
