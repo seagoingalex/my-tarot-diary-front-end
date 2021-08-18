@@ -36,7 +36,7 @@ function UndrawnSingleReading() {
                 // console.log("Daily reading set!")
                 // console.log(dailyReading)
                 cardDrawingCreate(reading)
-                history.push(`/chart/${reading.id}`)
+                // history.push(`/chart/${reading.id}`)
             }
         }
 
@@ -57,6 +57,7 @@ function UndrawnSingleReading() {
                 console.log ("New reading created!")
                 // console.log(dailyReading)
                 console.log(drawing)
+                history.push(`/chart/${reading.id}`)
             }
         }
 
