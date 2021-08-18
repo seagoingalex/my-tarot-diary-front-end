@@ -74,11 +74,11 @@ function ReadingEdit() {
         <>
         <h1>This is the Reading Edit component.</h1>
         <form onSubmit={handleReadingUpdate}>
-            <input type="text" name="rating" value={reading.rating} onChange={handleChange}>
+            <input type="text" placeholder="rating" name="rating" value={reading.rating} onChange={handleChange}>
             </input>
-            <input type="text" name="descriptors" value={reading.descriptors} onChange={handleChange}>
+            <input type="text" placeholder="descriptors" name="descriptors" value={reading.descriptors} onChange={handleChange}>
             </input>
-            <input type="text" name="notes" value={reading.notes} onChange={handleChange}>
+            <input type="text" placeholder="notes" name="notes" value={reading.notes} onChange={handleChange}>
             </input>
             <input type="submit" value={isLoading ? "Loading..." : "Save"}></input>
         </form>
