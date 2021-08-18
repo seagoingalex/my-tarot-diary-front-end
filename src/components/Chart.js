@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 // import { useParams, useHistory } from "react-router-dom"
 import { Link } from 'react-router-dom';
 
+import { useSelector } from 'react-redux'
+
 function Chart() {
+    const user = useSelector(state => state.loggedInUser)
+
     const [chart, setChart] = useState(null)
 
     useEffect(() => {
-        fetch('http://localhost:3000/readings')
+        fetch(`http://localhost:3000/${user.id}/chart`)
             .then(r => r.json())
             .then(data => setChart(data))
     }, [])
