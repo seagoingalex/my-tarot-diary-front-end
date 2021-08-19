@@ -67,8 +67,9 @@ function UndrawnSingleReading() {
 
     return (
         <>
-        <h1>This is the Undrawn Single Reading component.</h1>
+        <h1>Draw your Daily Tarot.</h1>
         <div className="container">
+            {/* <h1> Draw your Daily Tarot. </h2> */}
             <img onClick={handleDailyDrawing} className="undrawn-card" src={cardBack} />
         </div>
         </>
