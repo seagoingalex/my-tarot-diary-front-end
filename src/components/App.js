@@ -93,7 +93,8 @@ function App() {
         <ReadingEdit></ReadingEdit>
       </Route>
       <Route exact path="/library">
-        <Cards></Cards>
+        {/* <Cards></Cards> */}
+        <CardList></CardList>
       </Route>
       <Route path="/library/:id">
         <CardView></CardView>
