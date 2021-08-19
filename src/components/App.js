@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import "@fontsource/cairo"
+
 // import logo from './logo.svg';
 import './App.css';
 import { Provider, useDispatch, useSelector } from 'react-redux'
@@ -20,6 +22,9 @@ import ReadingView from "./ReadingView";
 import ReadingEdit from "./ReadingEdit";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
+
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +61,7 @@ function App() {
   // if (!loggedInUser) return <Login></Login>
 
   if (!loggedInUser) return (
+    
     <Switch>
       <Route exact path="/">
         <LoginForm></LoginForm>

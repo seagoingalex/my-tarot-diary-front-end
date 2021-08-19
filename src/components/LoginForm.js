@@ -20,13 +20,26 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Image1 from "../images/gallery-1.jpeg"
-import Image2 from "../images/gallery-2.jpeg"
-import Image3 from "../images/gallery-3.jpeg"
-import Image4 from "../images/gallery-4.jpeg"
-import Image5 from "../images/gallery-5.jpeg"
+import "@fontsource/cairo"
+
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+
+import Image1 from "../images/Login-gallery/gallery-1.jpeg"
+import Image2 from "../images/Login-gallery/gallery-2.jpeg"
+import Image3 from "../images/Login-gallery/gallery-3.jpeg"
+import Image4 from "../images/Login-gallery/gallery-4.jpeg"
+import Image5 from "../images/Login-gallery/gallery-5.jpeg"
+import avatar from "../images/icons/sign-in-icon-3.png"
 
 const backgroundImages = [Image1, Image2, Image3, Image4, Image5]
+
+const fontTheme = createTheme({
+    typography: {
+      fontFamily: [
+        'Cairo',
+      ].join(','),
+    },
+  });
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -53,13 +66,44 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.secondary.main,
     },
     form: {
+      '& label.Mui-focused': {
+        color: 'black',
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: 'black',
+        },
+        '&:hover fieldset': {
+          borderColor: 'black',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: 'black',
+        },
+      },
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
+      color: "black",
+      focused: "black",
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      backgroundColor: "black",
+      color: "white",
     },
+    large: {
+        width: theme.spacing(15),
+        height: theme.spacing(15),
+        marginBottom: theme.spacing(2)
+    },
+    hyperlink: {
+        color: "black"
+    },
+    // font: {
+    //     theme.typography.fontFamily:
+    // },
   }));
+
+
 
 function LoginForm() {
     const classes = useStyles();
@@ -117,15 +161,18 @@ function LoginForm() {
         <>
 
 <Grid container component="main" className={classes.root}>
+    <ThemeProvider theme={fontTheme}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
+          {/* <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
-          </Avatar>
+          </Avatar> */}
+          <Avatar src={avatar} className={classes.large} ></Avatar>
+          
           <Typography component="h1" variant="h5">
-            Sign in
+            My Tarot Diary
           </Typography>
           <form onSubmit={handleSubmit} className={classes.form} noValidate>
             <TextField
@@ -160,7 +207,7 @@ function LoginForm() {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
+            //   color="primary"
               className={classes.submit}
             >
               {isLoading ? "Loading..." : "Sign in"}
@@ -172,7 +219,7 @@ function LoginForm() {
                 </Link>
               </Grid> */}
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link href="/signup" variant="body2" className={classes.hyperlink}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -183,6 +230,7 @@ function LoginForm() {
           </form>
         </div>
       </Grid>
+      </ThemeProvider>
     </Grid>
 
 
