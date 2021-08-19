@@ -1,6 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom"
 
+//Grid container styles
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
+import Paper from '@material-ui/core/Paper';
+import Typography from "@material-ui/core/Typography";
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles(theme => ({
+    root: {
+      flexGrow: 1,
+      marginTop: theme.spacing(2),      
+    },
+    paper: {
+      padding: theme.spacing(2),
+      margin: 'auto',
+      maxWidth: 1000,
+      maxHeight: 580,
+    },
+    image: {
+      width: 330,
+      height: 550,
+    },
+    img: {
+      margin: 'auto',
+      display: 'block',
+      maxWidth: '100%',
+      maxHeight: '100%',
+    },
+    thumbnail: {
+        height: 40,
+        width: 40,
+    },
+    back: {
+        margin: theme.spacing(1, 0, 2,),
+        backgroundColor: "black",
+        color: "white",
+    },
+    edit: {
+        margin: theme.spacing(1, 1, 2,),
+        backgroundColor: "black",
+        color: "white",
+    }
+  }));
+
 function ReadingView() {
     const [reading, setReading] = useState([])
     const [cards, setCards] = useState([])
@@ -9,6 +58,8 @@ function ReadingView() {
     const { id } = useParams()
 
     const history = useHistory();
+
+    const classes = useStyles();
 
     useEffect(() => {
         fetch(`http://localhost:3000/readings/${id}`)
@@ -22,6 +73,63 @@ function ReadingView() {
     }, [id])
 
     if (!reading && !cards) return <h2>Loading...</h2>
+
+    return (
+        <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <Grid container spacing={2}>
+          {/* <Grid item>
+            <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
+              <img className={classes.img} alt="complex" src={card.img} />
+            </ButtonBase>
+          </Grid> */}
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+              <Typography gutterBottom variant="subtitle1">
+                Question: {reading.question}
+                </Typography>
+                <Typography gutterBottom variant="subtitle1">
+                  You drew: {card.name} | {card.arcana_type} Arcana
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                    Rating: {reading.rating}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                    Descriptors: {reading.descriptors}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Notes: {reading.notes}
+                </Typography>
+                <Button onClick={() => history.goBack()} className={classes.back}>
+                  Go Back
+                </Button>
+                <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
+                  Edit
+                </Button>
+              </Grid>
+              <Grid item>
+                {/* <Button className={classes.back}>
+                  Go Back
+                </Button> */}
+                {/* <Typography variant="body2" style={{ cursor: 'pointer' }}>
+                  Go Back
+                </Typography> */}
+              </Grid>
+            </Grid>
+            {/* <Grid item>
+              <Typography variant="subtitle1"> <img className={classes.thumbnail} src={card.suit_thumbnail} /></Typography>
+            </Grid> */}
+          </Grid>
+          <Grid item>
+            <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
+              <img className={classes.img} alt="complex" src={card.img} />
+            </ButtonBase>
+          </Grid>
+        </Grid>
+      </Paper>
+    </div>
+    );
 
     return (
         <>
