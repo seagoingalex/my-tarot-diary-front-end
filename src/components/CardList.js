@@ -8,6 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 
 import { fetchCards } from "../store/reducers/reducerSlice.js";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,6 +16,8 @@ import { useSelector, useDispatch } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginTop: theme.spacing(2),
+    color: "red",
   },
   paper: {
     height: 425.7,
@@ -45,6 +48,7 @@ function CardList() {
     }
 
     return (
+      <>
       <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justifyContent="center" spacing={3}>
@@ -66,6 +70,7 @@ function CardList() {
         </Grid>
       </Grid>
     </Grid>
+    </>
     );
 
 
