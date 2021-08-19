@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     marginTop: theme.spacing(2),
+    color: "red",
   },
   paper: {
     height: 425.7,
