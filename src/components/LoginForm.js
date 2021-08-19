@@ -20,6 +20,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+import "@fontsource/cairo"
+
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+
 import Image1 from "../images/Login-gallery/gallery-1.jpeg"
 import Image2 from "../images/Login-gallery/gallery-2.jpeg"
 import Image3 from "../images/Login-gallery/gallery-3.jpeg"
@@ -28,6 +32,14 @@ import Image5 from "../images/Login-gallery/gallery-5.jpeg"
 import avatar from "../images/icons/sign-in-icon-3.png"
 
 const backgroundImages = [Image1, Image2, Image3, Image4, Image5]
+
+const fontTheme = createTheme({
+    typography: {
+      fontFamily: [
+        'Cairo',
+      ].join(','),
+    },
+  });
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -85,8 +97,13 @@ const useStyles = makeStyles((theme) => ({
     },
     hyperlink: {
         color: "black"
-    }
+    },
+    // font: {
+    //     theme.typography.fontFamily:
+    // },
   }));
+
+
 
 function LoginForm() {
     const classes = useStyles();
@@ -144,6 +161,7 @@ function LoginForm() {
         <>
 
 <Grid container component="main" className={classes.root}>
+    <ThemeProvider theme={fontTheme}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -152,6 +170,7 @@ function LoginForm() {
             <LockOutlinedIcon />
           </Avatar> */}
           <Avatar src={avatar} className={classes.large} ></Avatar>
+          
           <Typography component="h1" variant="h5">
             My Tarot Diary
           </Typography>
@@ -211,6 +230,7 @@ function LoginForm() {
           </form>
         </div>
       </Grid>
+      </ThemeProvider>
     </Grid>
 
 

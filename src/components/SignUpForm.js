@@ -21,6 +21,16 @@ import Container from '@material-ui/core/Container';
 
 import avatar from "../images/icons/sign-in-icon-3.png"
 
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+
+const fontTheme = createTheme({
+    typography: {
+      fontFamily: [
+        'Cairo',
+      ].join(','),
+    },
+  });
+
 const useStyles = makeStyles((theme) => ({
     root: {
       height: '100vh',
@@ -138,6 +148,7 @@ function SignUpForm() {
         <>
 
         <Container component="main" maxWidth="xs">
+            <ThemeProvider theme={fontTheme}>
             <CssBaseline />
             <div className={classes.paper}>
             <Avatar src={avatar} className={classes.large} ></Avatar>
@@ -236,6 +247,7 @@ function SignUpForm() {
             <Box mt={5}>
                 {/* <Copyright /> */}
             </Box>
+            </ThemeProvider>
             </Container>
 
         {/* <h1>This is the Log In Form component.</h1>
