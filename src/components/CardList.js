@@ -16,6 +16,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap/dist/css/bootstrap.css';
 
+import Fade from '@material-ui/core/Fade';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -44,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 function CardList() {
   const [spacing, setSpacing] = React.useState(2);
   const [isLoading, setLoading] = React.useState(false)
+  const [checked, setChecked] = React.useState(false);
 
   const classes = useStyles();
 
@@ -51,8 +54,14 @@ function CardList() {
 
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   dispatch(fetchCards());
+  // }, [dispatch]);
+
   useEffect(() => {
-    dispatch(fetchCards());
+    dispatch(fetchCards())
+      .then(setLoading(true))
+      .then(setChecked(true))
   }, [dispatch]);
 
     function handleCardClick(e) {
@@ -61,7 +70,7 @@ function CardList() {
 
     }
 
-    if (!cards) return (
+    if (!isLoading) return (
       <>
       <Spinner className={classes.spinner} animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
@@ -76,12 +85,14 @@ function CardList() {
         <Grid container justifyContent="center" spacing={3}>
           {cards.map((card) => (
         // <Link to="/cardview/:id" > 
+          <Fade in={checked}>
           <Grid key={card.id} item>
             <Link to={`/library/${card.id}`}>
               {/* <Paper className={classes.paper}></Paper> */}
                 <img onClick={handleCardClick} className={classes.paper} key={card.id} src={card.img} alt="card" value={card.id}/>
             </Link>
           </Grid>
+          </Fade>
           
           // {[0, 1, 2].map((value) => (
           //   <Grid key={value} item>
