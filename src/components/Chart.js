@@ -32,6 +32,17 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+const fontTheme = createTheme({
+    typography: {
+      fontFamily: [
+        'Cairo',
+      ].join(','),
+    },
+  });
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -101,7 +112,7 @@ function Chart() {
 
     return (
         <>
-
+        <ThemeProvider theme={fontTheme}>
         <div className={classes.demo}>
             {chart.map((reading) => (
                 <List className={classes.root}>
@@ -129,7 +140,7 @@ function Chart() {
                 </List>
             ))}
         </div>
-
+        </ThemeProvider>
 
         </>
       );

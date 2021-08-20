@@ -30,6 +30,17 @@ import cupsThumbnail from "../images/Thumbnails/CupsThumbnail.png"
 import swordsThumbnail from "../images/Thumbnails/SwordThumbnail.png"
 import pentaclesThumbnail from "../images/Thumbnails/PentaclesThumbnail.png"
 
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+const fontTheme = createTheme({
+    typography: {
+      fontFamily: [
+        'Cairo',
+      ].join(','),
+    },
+  });
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -152,7 +163,7 @@ function CardList() {
       {/* <Grid container justifyContent="center" className={classes.root} spacing={2}>
       <Search setCardSearch={setCardSearch} setSuitFilter={setSuitFilter} cardSearch={cardSearch}/>
       </Grid> */}
-
+      <ThemeProvider theme={fontTheme}>
       <Grid container className={classes.search} spacing={2}>
       <InputBase
                     placeholder="Search…"
@@ -199,6 +210,7 @@ function CardList() {
         </Grid>
       </Grid>
     </Grid>
+    </ThemeProvider>
     </>
     );
 

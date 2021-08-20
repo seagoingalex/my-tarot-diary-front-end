@@ -18,6 +18,17 @@ import Fade from '@material-ui/core/Fade';
 import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap/dist/css/bootstrap.css';
 
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+const fontTheme = createTheme({
+    typography: {
+      fontFamily: [
+        'Cairo',
+      ].join(','),
+    },
+  });
+
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
@@ -94,6 +105,7 @@ function CardView() {
 
     return (
         <div className={classes.root}>
+                        <ThemeProvider theme={fontTheme}>
         <Fade in={checked}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
@@ -134,6 +146,7 @@ function CardView() {
         </Grid>
       </Paper>
       </Fade>
+      </ThemeProvider>
     </div>
     );
     
