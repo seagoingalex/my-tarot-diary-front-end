@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import Search from "./Search";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -47,10 +48,23 @@ function CardList() {
   const [spacing, setSpacing] = React.useState(2);
   const [isLoading, setLoading] = React.useState(false)
   const [checked, setChecked] = React.useState(false);
+  const [cardSearch, setCardSearch] = useState("")
+  const [suitFilter, setSuitFilter] = useState("All");
 
   const classes = useStyles();
 
   const cards = useSelector((state) => state.entities);
+
+  const cardItems = cards
+      .filter((card) => {
+        return suitFilter === "All" || card.suit === suitFilter;
+      })
+      .filter((card) => {
+        return card.name.toLowerCase().includes(cardSearch.toLowerCase());
+      })
+      // .map((card) => {
+      //   return <ProjectItem key={project.id} project={project} />;
+      // });
 
   const dispatch = useDispatch();
 
@@ -70,6 +84,10 @@ function CardList() {
 
     }
 
+    // function handleSearchChange (e) {
+    //   setSearch(e.target.value)
+    // }
+
     if (!isLoading) return (
       <>
       <Spinner className={classes.spinner} animation="border" role="status">
@@ -80,10 +98,12 @@ function CardList() {
 
     return (
       <>
+      <Search setCardSearch={setCardSearch} setSuitFilter={setSuitFilter} cardSearch={cardSearch}/>
+      
       <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justifyContent="center" spacing={3}>
-          {cards.map((card) => (
+          {cardItems.map((card) => (
         // <Link to="/cardview/:id" > 
           <Fade in={checked}>
           <Grid key={card.id} item>
