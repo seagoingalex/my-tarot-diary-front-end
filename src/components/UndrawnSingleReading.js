@@ -61,7 +61,8 @@ function UndrawnSingleReading() {
                     reader_id: user.id,
                     reader_type: "PersonalProfile",
                     drawing_type: "Daily Drawing",
-                    question: "What is my daily reading?"
+                    question: "What is my daily reading?",
+                    // rating: "TBD"
                 })
             })
 

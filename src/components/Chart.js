@@ -118,6 +118,7 @@ function Chart() {
 
                   <ListItemText primary={reading.cards[0].name} secondary={reading.created_at.substring(0,10)} />
                   <ListItemSecondaryAction>
+                          Rating: {reading.rating}
                           <IconButton component={Link} to={`/chart/${reading.id}`} edge="end" aria-label="delete">
                             <DoubleArrowIcon />
                           </IconButton>

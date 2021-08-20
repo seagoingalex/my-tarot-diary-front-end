@@ -13,6 +13,11 @@ import Typography from "@material-ui/core/Typography";
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 
+import Fade from '@material-ui/core/Fade';
+
+import Spinner from 'react-bootstrap/Spinner';
+import 'bootstrap/dist/css/bootstrap.css';
+
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
@@ -47,6 +52,15 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1, 1, 2,),
         backgroundColor: "black",
         color: "white",
+    },
+    spinner: {
+        position: 'absolute',
+        left: 620,
+        right: 0,
+        top: 340,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
   }));
 
@@ -54,6 +68,7 @@ function ReadingView() {
     const [reading, setReading] = useState([])
     const [cards, setCards] = useState([])
     const [card, setCard] = useState([])
+    const [checked, setChecked] = React.useState(false);
 
     const { id } = useParams()
 
@@ -67,15 +82,25 @@ function ReadingView() {
             .then(data => {
                 setReading(data)
                 setCard(data.cards[0])
+                setChecked(true)
             })
             // .then(data => setReading(data))
             // .then(data => console.log(data))
     }, [id])
 
-    if (!reading && !cards) return <h2>Loading...</h2>
+    // if (!reading && !cards) return <h2>Loading...</h2>
+
+    if (!reading && !cards) return (
+        <>
+        <Spinner className={classes.spinner} animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+        </>
+    );
 
     return (
         <div className={classes.root}>
+            <Fade in={checked}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           {/* <Grid item>
@@ -128,6 +153,7 @@ function ReadingView() {
           </Grid>
         </Grid>
       </Paper>
+      </Fade>
     </div>
     );
 

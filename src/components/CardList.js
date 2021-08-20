@@ -19,6 +19,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import Fade from '@material-ui/core/Fade';
 
+import { InputBase } from '@material-ui/core';
+
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+
+import majorThumbnail from "../images/Thumbnails/MajorThumbnail.png"
+import wandsThumbnail from "../images/Thumbnails/WandThumbnail.png"
+import cupsThumbnail from "../images/Thumbnails/CupsThumbnail.png"
+import swordsThumbnail from "../images/Thumbnails/SwordThumbnail.png"
+import pentaclesThumbnail from "../images/Thumbnails/PentaclesThumbnail.png"
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -40,7 +51,46 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'center'
-}
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  }, 
+  filter: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+    paddingBottom: `calc(1em + ${theme.spacing(0.3)}px)`,
+  },
+  filterimage: {
+    height: 30,
+    weight: 30,
+  },
+  filterbutton: {
+    paddingLeft: `calc(1em + ${theme.spacing(2)}px)`,
+    paddingRight: `calc(1em + ${theme.spacing(2)}px)`
+  },
+  search: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    '& > *': {
+    },
+    paddingTop: `calc(1em + ${theme.spacing(2)}px)`,
+  },
+  
 }));
 
 // function CardList({ cards = [] }) {
@@ -98,11 +148,37 @@ function CardList() {
 
     return (
       <>
+
+      {/* <Grid container justifyContent="center" className={classes.root} spacing={2}>
       <Search setCardSearch={setCardSearch} setSuitFilter={setSuitFilter} cardSearch={cardSearch}/>
-      
-      <Grid container className={classes.root} spacing={2}>
-      <Grid item xs={12}>
+      </Grid> */}
+
+      <Grid container className={classes.search} spacing={2}>
+      <InputBase
+                    placeholder="Search…"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    inputProps={{ 'aria-label': 'search' }}
+                    onChange={(e) => setCardSearch(e.target.value)}
+            />
+      <Grid item xs={12}>   
+
+        <div className={classes.filter}>
+   
+      <ButtonGroup variant="text" color="black" aria-label="text primary button group">
+        <Button className={classes.filterbutton} onClick={() => setSuitFilter("All")}>All</Button>
+        <Button className={classes.filterbutton} onClick={() => setSuitFilter("major")} ><img className={classes.filterimage} src={majorThumbnail}></img></Button>
+        <Button className={classes.filterbutton} onClick={() => setSuitFilter("wands")}><img className={classes.filterimage} src={wandsThumbnail}></img></Button>
+        <Button className={classes.filterbutton} onClick={() => setSuitFilter("cups")}><img className={classes.filterimage} src={cupsThumbnail}></img></Button>
+        <Button className={classes.filterbutton} onClick={() => setSuitFilter("swords")}><img className={classes.filterimage} src={swordsThumbnail}></img></Button>
+        <Button className={classes.filterbutton} onClick={() => setSuitFilter("pentacles")}><img className={classes.filterimage} src={pentaclesThumbnail}></img></Button>
+      </ButtonGroup>
+    </div>
+        
         <Grid container justifyContent="center" spacing={3}>
+
           {cardItems.map((card) => (
         // <Link to="/cardview/:id" > 
           <Fade in={checked}>
