@@ -13,6 +13,9 @@ import Divider from '@material-ui/core/Divider';
 import { fetchCards } from "../store/reducers/reducerSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 
+import Spinner from 'react-bootstrap/Spinner';
+import 'bootstrap/dist/css/bootstrap.css';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -26,11 +29,22 @@ const useStyles = makeStyles((theme) => ({
   control: {
     padding: theme.spacing(2),
   },
+  spinner: {
+    position: 'absolute',
+    left: 620,
+    right: 0,
+    top: 340,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+}
 }));
 
 // function CardList({ cards = [] }) {
 function CardList() {
   const [spacing, setSpacing] = React.useState(2);
+  const [isLoading, setLoading] = React.useState(false)
+
   const classes = useStyles();
 
   const cards = useSelector((state) => state.entities);
@@ -46,6 +60,14 @@ function CardList() {
         console.log(e.target)
 
     }
+
+    if (!cards) return (
+      <>
+      <Spinner className={classes.spinner} animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+      </Spinner>
+      </>
+  );
 
     return (
       <>

@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux'
 
+import Spinner from 'react-bootstrap/Spinner';
+import 'bootstrap/dist/css/bootstrap.css';
+
 // Material-UI list imports
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -47,6 +50,15 @@ const useStyles = makeStyles((theme) => ({
     thumbnail: {
         height: 25,
         weight: 25,
+    },
+    spinner: {
+        position: 'absolute',
+        left: 620,
+        right: 0,
+        top: 340,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 
   }));
@@ -76,11 +88,20 @@ function Chart() {
                 setChart(data))
     }, [])
 
-    if (!chart) return <h2>Loading...</h2>
+    if (!chart) return (
+        <>
+        <Spinner className={classes.spinner} animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+        </>
+    );
+
+    // if (!chart) return <h2>Loading...</h2>
 
 
     return (
         <>
+
         <div className={classes.demo}>
             {chart.map((reading) => (
                 <List className={classes.root}>
