@@ -14,6 +14,19 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
+import Fade from '@material-ui/core/Fade';
+
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+const fontTheme = createTheme({
+    typography: {
+      fontFamily: [
+        'Cairo',
+      ].join(','),
+    },
+  });
+
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
@@ -62,6 +75,8 @@ function ReadingEdit() {
     const [reading, setReading] = useState({ rating: "", descriptors: "", notes: "" });
     const [card, setCard] = useState([])
 
+    const [checked, setChecked] = React.useState(false);
+
     const { id } = useParams()
 
     const history = useHistory();
@@ -79,6 +94,7 @@ function ReadingEdit() {
             .then(data => {
                 setReading(data)
                 setCard(data.cards[0])
+                setChecked(true)
                 // setRating(data.rating)
                 // setDescriptors(data.descriptors)
                 // setNotes(data.notes)
@@ -133,6 +149,8 @@ function ReadingEdit() {
 
     return (
         <div className={classes.root}>
+            <ThemeProvider theme={fontTheme}>
+            <Fade in={checked}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           {/* <Grid item>
@@ -186,13 +204,13 @@ function ReadingEdit() {
                         id="outlined-multiline-flexible"
                         label="Notes"
                         multiline
-                        maxRows={15}
+                        maxRows={7.5}
                         value={reading.notes}
                         onChange={handleChange}
                         variant="outlined"
                         placeholder="Enter your notes here..."
                         name="notes"
-                        rows={9}
+                        rows={7.5}
                         fullWidth
                     />
 
@@ -232,6 +250,8 @@ function ReadingEdit() {
           </Grid>
         </Grid>
       </Paper>
+      </Fade>
+      </ThemeProvider>
     </div>
     );
 
