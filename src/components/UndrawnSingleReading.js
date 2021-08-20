@@ -3,10 +3,18 @@ import cardBack from '../images/card-back.jpeg'
 import { useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom"
 
+import ReactCardFlip from 'react-card-flip';
+
 function UndrawnSingleReading() {
     const user = useSelector(state => state.loggedInUser)
 
     const [dailyReading, setDailyReading] = useState([])
+    const [isFlipped, flipCard] = useState(false)
+
+    function handleClick(e) {
+        e.preventDefault();
+        flipCard(!isFlipped);
+      }
 
     const history = useHistory();
 
@@ -65,6 +73,8 @@ function UndrawnSingleReading() {
         // history.push(`/chart/${dailyReading.id}`)
     }
 
+
+    
     return (
         <>
         <h1 >Draw your Daily Tarot.</h1>
