@@ -134,7 +134,8 @@ function ReadingEdit() {
                 const reading = await res.json()
                 console.log("Reading updated successfully!")
                 console.log(reading)
-                history.goBack()
+                // history.goBack()
+                history.push(`/chart/${reading.id}`)
             }
         }
 
