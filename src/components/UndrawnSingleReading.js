@@ -57,7 +57,7 @@ function UndrawnSingleReading() {
                 console.log ("New reading created!")
                 // console.log(dailyReading)
                 console.log(drawing)
-                history.push(`/chart/${reading.id}`)
+                history.push(`/readings/${reading.id}`)
             }
         }
 
@@ -67,7 +67,7 @@ function UndrawnSingleReading() {
 
     return (
         <>
-        <h1>Draw your Daily Tarot.</h1>
+        <h1 >Draw your Daily Tarot.</h1>
         <div className="container">
             {/* <h1> Draw your Daily Tarot. </h2> */}
             <img onClick={handleDailyDrawing} className="undrawn-card" src={cardBack} />

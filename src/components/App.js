@@ -22,6 +22,7 @@ import ReadingView from "./ReadingView";
 import ReadingEdit from "./ReadingEdit";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
+import DrawnSingleView from "./DrawnSingleView";
 
 
 
@@ -79,6 +80,9 @@ function App() {
     <Switch>
       <Route exact path="/">
         <Home></Home>
+      </Route>
+      <Route exact path="/readings/:id">
+        <DrawnSingleView></DrawnSingleView>
       </Route>
       <Route path="/profile">
         <Profile></Profile>
