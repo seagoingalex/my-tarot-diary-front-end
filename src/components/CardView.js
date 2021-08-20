@@ -13,6 +13,22 @@ import Typography from "@material-ui/core/Typography";
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 
+import Fade from '@material-ui/core/Fade';
+
+import Spinner from 'react-bootstrap/Spinner';
+import 'bootstrap/dist/css/bootstrap.css';
+
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+const fontTheme = createTheme({
+    typography: {
+      fontFamily: [
+        'Cairo',
+      ].join(','),
+    },
+  });
+
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
@@ -42,29 +58,55 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1, 0, 2),
         backgroundColor: "black",
         color: "white",
+    },
+    spinner: {
+        position: 'absolute',
+        left: 620,
+        right: 0,
+        top: 340,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
   }));
 
 function CardView() {
     const [card, setCard] = useState(null);
+    const [checked, setChecked] = React.useState(false);
+
     const { id } = useParams()
 
     const history = useHistory();
 
     const classes = useStyles();
 
+    
+
 
     useEffect(() => {
         fetch(`http://localhost:3000/cards/${id}`)
             .then(r => r.json())
-            .then(data => setCard(data))
+            .then(data => {
+                setCard(data)
+                setChecked(true)
+            })
             // .then(data => console.log(data))
     }, [id])
 
-    if (!card) return <h2>Loading...</h2>
+    // if (!card) return <h2>Loading...</h2>
+
+    if (!card) return (
+        <>
+        <Spinner className={classes.spinner} animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+        </>
+    );
 
     return (
         <div className={classes.root}>
+                        <ThemeProvider theme={fontTheme}>
+        <Fade in={checked}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item>
@@ -103,6 +145,8 @@ function CardView() {
           </Grid>
         </Grid>
       </Paper>
+      </Fade>
+      </ThemeProvider>
     </div>
     );
     

@@ -15,6 +15,17 @@ import Button from '@material-ui/core/Button';
 
 import Fade from '@material-ui/core/Fade';
 
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+const fontTheme = createTheme({
+    typography: {
+      fontFamily: [
+        'Cairo',
+      ].join(','),
+    },
+  });
+
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
@@ -80,6 +91,7 @@ function DrawnSingleView() {
 
     return (
         <div className={classes.root}>
+                      <ThemeProvider theme={fontTheme}>
       <Fade in={checked}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
@@ -134,6 +146,7 @@ function DrawnSingleView() {
         </Grid>
       </Paper>
       </Fade>
+      </ThemeProvider>
     </div>
     );
 
