@@ -3,20 +3,48 @@ import cardBack from '../images/card-back.jpeg'
 import { useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom"
 
-import ReactCardFlip from 'react-card-flip';
+import { makeStyles } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
+import Paper from '@material-ui/core/Paper';
+import Fade from '@material-ui/core/Fade';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      height: 180,
+      
+    },
+    container: {
+      display: 'flex',
+      margin: theme.spacing(5)
+    },
+    paper: {
+      margin: theme.spacing(2),
+    },
+    svg: {
+      width: 100,
+      height: 100,
+    },
+    polygon: {
+      fill: theme.palette.common.white,
+      stroke: theme.palette.divider,
+      strokeWidth: 1,
+    },
+  }));
 
 function UndrawnSingleReading() {
+    const classes = useStyles();
+    const [checked, setChecked] = React.useState(true);
+
     const user = useSelector(state => state.loggedInUser)
 
     const [dailyReading, setDailyReading] = useState([])
-    const [isFlipped, flipCard] = useState(false)
-
-    function handleClick(e) {
-        e.preventDefault();
-        flipCard(!isFlipped);
-      }
-
+    
     const history = useHistory();
+
+    const handleChange = () => {
+        setChecked((prev) => !prev);
+      };
 
     function handleDailyDrawing(e) {
         console.log("You did a daily drawing!")
@@ -68,7 +96,7 @@ function UndrawnSingleReading() {
                 history.push(`/readings/${reading.id}`)
             }
         }
-
+        handleChange();
         dailyReadingCreate()
         // history.push(`/chart/${dailyReading.id}`)
     }
@@ -77,11 +105,17 @@ function UndrawnSingleReading() {
     
     return (
         <>
-        <h1 >Draw your Daily Tarot.</h1>
+        
+
+        {/* <h1 >Draw your Daily Tarot.</h1> */}
+        <Fade in={checked}>
         <div className="container">
             {/* <h1> Draw your Daily Tarot. </h2> */}
-            <img onClick={handleDailyDrawing} className="undrawn-card" src={cardBack} />
+            <img onClick={handleDailyDrawing} className={"undrawn-card"} src={cardBack} />
         </div>
+        </Fade>
+
+       
         </>
     )
 

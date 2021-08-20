@@ -13,6 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 
+import Fade from '@material-ui/core/Fade';
+
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
@@ -54,6 +56,7 @@ function DrawnSingleView() {
     const [reading, setReading] = useState([])
     const [cards, setCards] = useState([])
     const [card, setCard] = useState([])
+    const [checked, setChecked] = React.useState(false);
 
     const { id } = useParams()
 
@@ -67,6 +70,7 @@ function DrawnSingleView() {
             .then(data => {
                 setReading(data)
                 setCard(data.cards[0])
+                setChecked(true)
             })
             // .then(data => setReading(data))
             // .then(data => console.log(data))
@@ -76,6 +80,7 @@ function DrawnSingleView() {
 
     return (
         <div className={classes.root}>
+      <Fade in={checked}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           {/* <Grid item>
@@ -119,13 +124,16 @@ function DrawnSingleView() {
               <Typography variant="subtitle1"> <img className={classes.thumbnail} src={card.suit_thumbnail} /></Typography>
             </Grid> */}
           </Grid>
+          {/* <Fade in={checked}> */}
           <Grid item>
             <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
               <img className={classes.img} alt="complex" src={card.img} />
             </ButtonBase>
           </Grid>
+          {/* </Fade> */}
         </Grid>
       </Paper>
+      </Fade>
     </div>
     );
 

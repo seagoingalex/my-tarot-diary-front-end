@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
+import Search from "./Search";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -15,6 +16,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap/dist/css/bootstrap.css';
+
+import Fade from '@material-ui/core/Fade';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,15 +47,35 @@ const useStyles = makeStyles((theme) => ({
 function CardList() {
   const [spacing, setSpacing] = React.useState(2);
   const [isLoading, setLoading] = React.useState(false)
+  const [checked, setChecked] = React.useState(false);
+  const [cardSearch, setCardSearch] = useState("")
+  const [suitFilter, setSuitFilter] = useState("All");
 
   const classes = useStyles();
 
   const cards = useSelector((state) => state.entities);
 
+  const cardItems = cards
+      .filter((card) => {
+        return suitFilter === "All" || card.suit === suitFilter;
+      })
+      .filter((card) => {
+        return card.name.toLowerCase().includes(cardSearch.toLowerCase());
+      })
+      // .map((card) => {
+      //   return <ProjectItem key={project.id} project={project} />;
+      // });
+
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   dispatch(fetchCards());
+  // }, [dispatch]);
+
   useEffect(() => {
-    dispatch(fetchCards());
+    dispatch(fetchCards())
+      .then(setLoading(true))
+      .then(setChecked(true))
   }, [dispatch]);
 
     function handleCardClick(e) {
@@ -61,7 +84,11 @@ function CardList() {
 
     }
 
-    if (!cards) return (
+    // function handleSearchChange (e) {
+    //   setSearch(e.target.value)
+    // }
+
+    if (!isLoading) return (
       <>
       <Spinner className={classes.spinner} animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
@@ -71,17 +98,21 @@ function CardList() {
 
     return (
       <>
+      <Search setCardSearch={setCardSearch} setSuitFilter={setSuitFilter} cardSearch={cardSearch}/>
+      
       <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12}>
         <Grid container justifyContent="center" spacing={3}>
-          {cards.map((card) => (
+          {cardItems.map((card) => (
         // <Link to="/cardview/:id" > 
+          <Fade in={checked}>
           <Grid key={card.id} item>
             <Link to={`/library/${card.id}`}>
               {/* <Paper className={classes.paper}></Paper> */}
                 <img onClick={handleCardClick} className={classes.paper} key={card.id} src={card.img} alt="card" value={card.id}/>
             </Link>
           </Grid>
+          </Fade>
           
           // {[0, 1, 2].map((value) => (
           //   <Grid key={value} item>
