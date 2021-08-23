@@ -20,6 +20,12 @@ import Grid from '@material-ui/core/Grid';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+//For the 3 Card Grid
+import FormLabel from '@material-ui/core/FormLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
+
+
 const fontTheme = createTheme({
     typography: {
       fontFamily: [
@@ -29,13 +35,20 @@ const fontTheme = createTheme({
   });
 
 const useStyles = makeStyles((theme) => ({
-    // undrawn: {
-    //   height: 120,
-      
-    // },
+    undrawnroot: {
+      flexGrow: 1,
+    },
+    undrawnpaper: {
+      height: 140,
+      width: 100,
+    },
+    undrawncontrol: {
+      padding: theme.spacing(2),
+    },
     container: {
       display: 'flex',
     //   margin: theme.spacing(1)
+      marginTop: theme.spacing(-12),  
     },
     paper: {
     //   margin: theme.spacing(1),
@@ -52,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         marginTop: theme.spacing(2),  
-        marginBottom: theme.spacing(-4),      
+        marginBottom: theme.spacing(-7),      
       },
       paper: {
         padding: theme.spacing(1),
@@ -97,6 +110,22 @@ function UndrawnSingleCustomReading() {
     const [checked, setChecked] = React.useState(true);
     const [question, setQuestion] = React.useState("")
 
+    const [spacing, setSpacing] = React.useState(2);
+
+    const [firstCardData, setFirstCardData] = React.useState(null)
+    const [secondCardData, setSecondCardData] = React.useState(null)
+    const [thirdCardData, setThirdCardData] = React.useState(null)
+    const [firstCardImage, setFirstCardImage] = React.useState(cardBack)
+    const [secondCardImage, setSecondCardImage] = React.useState(cardBack)
+    const [thirdCardImage, setThirdCardImage] = React.useState(cardBack)
+
+    const [saveButton, toggleSaveButton] = React.useState(true)
+
+
+    // const handleChange = (event) => {
+    //   setSpacing(Number(event.target.value));
+    // };
+
     const user = useSelector(state => state.loggedInUser)
 
     const [dailyReading, setDailyReading] = useState([])
@@ -114,12 +143,12 @@ function UndrawnSingleCustomReading() {
         setQuestion(e.target.value)
     }
 
-    function handleSingleCustomDrawing(e) {
+    function handleMultiCustomDrawing(e) {
         e.preventDefault();
         setIsLoading(true);
-        console.log("You did a daily drawing!")
+        console.log("You did a custom multi drawing!")
 
-        async function dailyReadingCreate() {
+        async function customReadingCreate() {
             const res = await fetch("http://localhost:3000/readings", {
                 method: "POST",
                 headers: {
@@ -142,12 +171,14 @@ function UndrawnSingleCustomReading() {
                 // setDailyReading(reading)
                 // console.log("Daily reading set!")
                 // console.log(dailyReading)
-                cardDrawingCreate(reading)
-                // history.push(`/chart/${reading.id}`)
+                cardDrawingCreate(reading, firstCardData)
+                cardDrawingCreate(reading, secondCardData)
+                cardDrawingCreate(reading, thirdCardData)
+                history.push(`/chart/${reading.id}`)
             }
         }
 
-        async function cardDrawingCreate(reading) {
+        async function cardDrawingCreate(reading, cardData) {
             const res = await fetch("http://localhost:3000/card_drawings", {
                 method: "POST",
                 headers: {
@@ -155,7 +186,7 @@ function UndrawnSingleCustomReading() {
                 },
                 body: JSON.stringify({
                     reading_id: reading.id,
-                    card_id: Math.floor(Math.random() * (78 - 1 + 1)) + 1
+                    card_id: cardData.id
                 })
             })
 
@@ -164,12 +195,66 @@ function UndrawnSingleCustomReading() {
                 console.log ("New reading created!")
                 // console.log(dailyReading)
                 console.log(drawing)
-                history.push(`/readings/${reading.id}`)
+                // history.push(`/readings/${reading.id}`)
             }
         }
         handleFadeChange();
-        dailyReadingCreate()
+        customReadingCreate()
         // history.push(`/chart/${dailyReading.id}`)
+    }
+
+    function handleFirstCardClick() {
+      async function cardCreate() {
+        fetch(`http://localhost:3000/cards/${Math.floor(Math.random() * (78 - 1 + 1)) + 1}`).then((r) => {
+          if (r.ok) {
+            // r.json().then((card) => setFirstCardData(card)
+            r.json().then((card) => {
+              setChecked(false)
+              setFirstCardData(card)
+              setFirstCardImage(card.img)
+              setChecked(true)
+            
+            })
+          }
+        })
+      }
+      cardCreate()
+    }
+
+    function handleSecondCardClick() {
+      async function cardCreate() {
+        fetch(`http://localhost:3000/cards/${Math.floor(Math.random() * (78 - 1 + 1)) + 1}`).then((r) => {
+          if (r.ok) {
+            // r.json().then((card) => setFirstCardData(card)
+            r.json().then((card) => {
+              setChecked(false)
+              setSecondCardData(card)
+              setSecondCardImage(card.img)
+              setChecked(true)
+            
+            })
+          }
+        })
+      }
+      cardCreate()
+    }
+
+        function handleThirdCardClick() {
+      async function cardCreate() {
+        fetch(`http://localhost:3000/cards/${Math.floor(Math.random() * (78 - 1 + 1)) + 1}`).then((r) => {
+          if (r.ok) {
+            // r.json().then((card) => setThirdCardData(card)
+            r.json().then((card) => {
+              setChecked(false)
+              setThirdCardData(card)
+              setThirdCardImage(card.img)
+              setChecked(true)
+            
+            })
+          }
+        })
+      }
+      cardCreate()
     }
 
     // if (!reading) return <h2>Loading...</h2>
@@ -192,7 +277,7 @@ function UndrawnSingleCustomReading() {
               {/* <Typography gutterBottom variant="subtitle1">
                 Question: 
                 </Typography> */}
-                <form className={classes.form} onSubmit={handleSingleCustomDrawing}>
+                <form className={classes.form} onSubmit={handleMultiCustomDrawing}>
                     <TextField
                         id="outlined-multiline-flexible"
                         label="Enter the question you'd like to ask for this reading"
@@ -204,9 +289,10 @@ function UndrawnSingleCustomReading() {
                         placeholder="Enter your question"
                         name="rating"
                     />
-                    {/* <Button type="submit" value={isLoading ? "Loading..." : "Save"} className={classes.edit}>
+                    { firstCardData && secondCardData && thirdCardData ? 
+                    <Button type="submit" value={isLoading ? "Loading..." : "Save"} className={classes.edit}>
                   Save
-                </Button> */}
+                </Button> : null }
                 </form>
                 </Grid>
                 </Grid>
@@ -216,15 +302,23 @@ function UndrawnSingleCustomReading() {
                 </Fade>
                 </ThemeProvider>
           </div>
-
-        {/* <h1 >Draw your Daily Tarot.</h1> */}
-        <Fade in={checked}>
-        <div className="container">
+          <Fade in={checked}>
+          <Grid container className={classes.root} spacing={1}>
+      <Grid item xs={12}>
+        <Grid container justifyContent="center" spacing={3}>
+          {/* {[0, 1, 2].map((value) => ( */}
+            <Grid  item>
+            <div className="container">
             {/* <h1> Draw your Daily Tarot. </h2> */}
-            <img onClick={handleSingleCustomDrawing} className={"undrawn-card"} src={cardBack} />
+            <img onClick={handleFirstCardClick} className={"undrawn-card"} src={firstCardImage} />
+            <img onClick={handleSecondCardClick} className={"undrawn-card"} src={secondCardImage} />
+            <img onClick={handleThirdCardClick} className={"undrawn-card"} src={thirdCardImage} />
         </div>
-        </Fade>
-
+        </Grid>
+        </Grid>
+      </Grid>
+      </Grid>
+      </Fade>
        
         </>
     )

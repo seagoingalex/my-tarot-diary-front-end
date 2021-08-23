@@ -118,7 +118,7 @@ function Chart() {
             if(!dailyDrawView) {
                 return reading.drawing_type === "Daily Drawing"
             } else {
-                return reading.drawing_type === "Custom Single Drawing"
+                return reading.drawing_type === "Custom Drawing"
             }
         })
 

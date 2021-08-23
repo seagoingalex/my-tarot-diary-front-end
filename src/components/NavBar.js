@@ -124,7 +124,7 @@ function NavBar() {
               <ListItemIcon className={classes.iconColor}><PanToolIcon /></ListItemIcon>
               <ListItemText>Single Card Drawing</ListItemText>
             </ListItem>
-            <ListItem>
+            <ListItem button component={Link} to="/multi">
               <ListItemIcon className={classes.iconColor}><ViewWeekIcon /></ListItemIcon>
               <ListItemText>Multi Card Spread</ListItemText>
             </ListItem>
