@@ -24,6 +24,7 @@ import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import DrawnSingleView from "./DrawnSingleView";
 import UndrawnSingleCustomReading from "./UndrawnSingleCustomReading"
+import UndrawnMultiCustomReading from "./UndrawnMultiCustomReading"
 
 
 function App() {
@@ -82,6 +83,9 @@ function App() {
       </Route>
       <Route exact path="/single">
         <UndrawnSingleCustomReading></UndrawnSingleCustomReading>
+      </Route>
+      <Route exact path="/multi">
+        <UndrawnMultiCustomReading></UndrawnMultiCustomReading>
       </Route>
       <Route exact path="/readings/:id">
         <DrawnSingleView></DrawnSingleView>
