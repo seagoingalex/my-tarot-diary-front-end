@@ -1,54 +1,27 @@
+
+//React
 import React, { useState } from "react";
-import cardBack from '../images/card-back.jpeg'
-import { useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom"
 
-import { makeStyles } from '@material-ui/core/styles';
-import Switch from '@material-ui/core/Switch';
-import Paper from '@material-ui/core/Paper';
-import Fade from '@material-ui/core/Fade';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+//Redux
+import { useSelector } from 'react-redux'
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      height: 180,
-      
-    },
-    container: {
-      display: 'flex',
-      margin: theme.spacing(5)
-    },
-    paper: {
-      margin: theme.spacing(2),
-    },
-    svg: {
-      width: 100,
-      height: 100,
-    },
-    polygon: {
-      fill: theme.palette.common.white,
-      stroke: theme.palette.divider,
-      strokeWidth: 1,
-    },
-  }));
+//Material UI imports
+import Fade from '@material-ui/core/Fade';
+
+//Image imports
+import cardBack from '../images/card-back.jpeg'
 
 function UndrawnSingleReading() {
-    const classes = useStyles();
-    const [checked, setChecked] = React.useState(true);
-
-    const user = useSelector(state => state.loggedInUser)
-
-    const [dailyReading, setDailyReading] = useState([])
-    
+    const [checked, setChecked] = useState(true);
     const history = useHistory();
+    const user = useSelector(state => state.loggedInUser)
 
     const handleChange = () => {
         setChecked((prev) => !prev);
-      };
+    };
 
     function handleDailyDrawing(e) {
-        console.log("You did a daily drawing!")
-
         async function dailyReadingCreate() {
             const res = await fetch("http://localhost:3000/readings", {
                 method: "POST",
@@ -62,18 +35,13 @@ function UndrawnSingleReading() {
                     reader_type: "PersonalProfile",
                     drawing_type: "Daily Drawing",
                     question: "What is my daily reading?",
-                    // rating: "TBD"
                 })
             })
 
             if(res.ok) {
                 const reading = await res.json()
                 console.log(reading)
-                // setDailyReading(reading)
-                // console.log("Daily reading set!")
-                // console.log(dailyReading)
                 cardDrawingCreate(reading)
-                // history.push(`/chart/${reading.id}`)
             }
         }
 
@@ -91,35 +59,24 @@ function UndrawnSingleReading() {
 
             if(res.ok) {
                 const drawing = await res.json()
-                console.log ("New reading created!")
-                // console.log(dailyReading)
-                console.log(drawing)
                 history.push(`/readings/${reading.id}`)
             }
         }
+
         handleChange();
-        dailyReadingCreate()
-        // history.push(`/chart/${dailyReading.id}`)
+        dailyReadingCreate();
     }
 
-
-    
     return (
         <>
-        
-
-        {/* <h1 >Draw your Daily Tarot.</h1> */}
         <Fade in={checked}>
-        <div className="container">
-            {/* <h1> Draw your Daily Tarot. </h2> */}
-            <img onClick={handleDailyDrawing} className={"undrawn-card"} src={cardBack} />
-        </div>
+            <div className="container">
+                {/* <h1> Draw your Daily Tarot. </h2> */}
+                <img onClick={handleDailyDrawing} className={"undrawn-card"} src={cardBack} />
+            </div>
         </Fade>
-
-       
         </>
     )
-
 }
 
 export default UndrawnSingleReading

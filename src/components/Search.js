@@ -1,9 +1,12 @@
+//React
 import React from "react";
 
+// Material UI imports
 import { InputBase } from '@material-ui/core';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
+//Component-specific font theme and styling
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -38,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create('width'),
       width: '100%',
@@ -48,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-function Search({ setSuitFilter, setCardSearch, cardSearch }) {
+function Search({ setSuitFilter, setCardSearch }) {
     const classes = useStyles();
 
   return (
@@ -57,40 +59,27 @@ function Search({ setSuitFilter, setCardSearch, cardSearch }) {
       <Grid container justifyContent="center" spacing={3}>
         <Grid item xs={12}>
             <InputBase
-                    placeholder="Search…"
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                    }}
-                    inputProps={{ 'aria-label': 'search' }}
-                    onChange={(e) => setCardSearch(e.target.value)}
+                placeholder="Search…"
+                classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={(e) => setCardSearch(e.target.value)}
             />
         </Grid>
         <Grid item xs={12}>
-        <div className="phase-buttons">
-        <button onClick={() => setSuitFilter("All")}>All</button>
-        <button onClick={() => setSuitFilter("major")}>Major</button>
-        <button onClick={() => setSuitFilter("wands")}>Wands</button>
-        <button onClick={() => setSuitFilter("cups")}>Cups</button>
-        <button onClick={() => setSuitFilter("swords")}>Swords</button>
-        <button onClick={() => setSuitFilter("pentacles")}>Pentacles</button>
-      </div>
+          <div className="phase-buttons">
+            <button onClick={() => setSuitFilter("All")}>All</button>
+            <button onClick={() => setSuitFilter("major")}>Major</button>
+            <button onClick={() => setSuitFilter("wands")}>Wands</button>
+            <button onClick={() => setSuitFilter("cups")}>Cups</button>
+            <button onClick={() => setSuitFilter("swords")}>Swords</button>
+            <button onClick={() => setSuitFilter("pentacles")}>Pentacles</button>
+          </div>
         </Grid>    
-    </Grid>    
+      </Grid>    
     </div>
-
-    {/* <div className="ui search">
-      <div className="ui icon input">
-        <input 
-          onChange={(e) => setCardSearch(e.target.value)}
-          value={cardSearch}
-          className="prompt" />
-        <i className="search icon" />
-      </div>
-    </div> */}
-
-
-
     </>
   );
 }

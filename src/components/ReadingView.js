@@ -1,7 +1,8 @@
+//React
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom"
 
-//Grid container styles
+// Material UI imports
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -12,24 +13,19 @@ import Paper from '@material-ui/core/Paper';
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
-
 import Fade from '@material-ui/core/Fade';
-
 import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap/dist/css/bootstrap.css';
-
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
-
-//Material UI carousel attempt for multi card spread
+// Material UI carousel for multi card spread
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
 import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-// import itemData from './itemData';
 
+//Component-specific font theme and styling
 const fontTheme = createTheme({
     typography: {
       fontFamily: [
@@ -91,7 +87,6 @@ const useStyles = makeStyles(theme => ({
       },
       imageList: {
         flexWrap: 'nowrap',
-        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
         transform: 'translateZ(0)',
       },
       title: {
@@ -112,9 +107,7 @@ function ReadingView() {
     const [checked, setChecked] = React.useState(false);
 
     const { id } = useParams()
-
     const history = useHistory();
-
     const classes = useStyles();
 
     useEffect(() => {
@@ -126,11 +119,7 @@ function ReadingView() {
                 setCard(data.cards[0])
                 setChecked(true)
             })
-            // .then(data => setReading(data))
-            // .then(data => console.log(data))
     }, [id])
-
-    // if (!reading && !cards) return <h2>Loading...</h2>
 
     if (!reading && !cards) return (
         <>
@@ -158,166 +147,130 @@ function ReadingView() {
 
     if (reading.drawing_type === "Custom Drawing") return(
         <>
-{cards[1] ? 
-    <Fade in={checked}>
-<div className={classes.imageroot}>
-      <ImageList className={classes.imageList} cols={3}>
-        {cards.map((card) => (
-          <ImageListItem key={card.img}>
-            <img onClick={() => setCard(card)} src={card.img} alt={card.name} />
-            <ImageListItemBar
-              title={card.name}
-              classes={{
-                root: classes.titleBar,
-                title: classes.title,
-              }}
-              actionIcon={
-                <IconButton onClick={() => setCard(card)} aria-label={`star ${card.name}`}>
-                  <ArrowDownwardIcon className={classes.title} />
-                </IconButton>
-              }
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
-    </div>
-    </Fade>
-         : null }
+        {cards[1] ? 
+            <Fade in={checked}>
+                <div className={classes.imageroot}>
+                    <ImageList className={classes.imageList} cols={3}>
+                        {cards.map((card) => (
+                            <ImageListItem key={card.img}>
+                                <img onClick={() => setCard(card)} src={card.img} alt={card.name} />
+                                <ImageListItemBar
+                                    title={card.name}
+                                    classes={{
+                                        root: classes.titleBar,
+                                        title: classes.title,
+                                    }}
+                                    actionIcon={
+                                        <IconButton onClick={() => setCard(card)} aria-label={`star ${card.name}`}>
+                                        <ArrowDownwardIcon className={classes.title} />
+                                        </IconButton>
+                                    }
+                                />
+                            </ImageListItem>
+                        ))}
+                    </ImageList>
+                </div>
+            </Fade>
+        : null }
+        
         <div className={classes.root}>
             <ThemeProvider theme={fontTheme}>
-          <CssBaseline />
+            <CssBaseline />
             <Fade in={checked}>
-
-       
-
-      <Paper className={classes.paper}>
-        <Grid container spacing={2}>
-          {/* <Grid item>
-            <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
-              <img className={classes.img} alt="complex" src={card.img} />
-            </ButtonBase>
-          </Grid> */}
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-              <Typography gutterBottom variant="subtitle1">
-                Question: {reading.question}
-                </Typography>
-                <Typography gutterBottom variant="subtitle1">
-                {cards[1] ? 
-                  `Current Card Selection: ${card.name} | ${card.arcana_type} Arcana`
-                  
-                  : `You drew: ${card.name} | ${card.arcana_type} Arcana` }
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                    Rating: {reading.rating}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                    Descriptors: {reading.descriptors}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  Notes: {reading.notes}
-                </Typography>
-                <Button onClick={() => history.push("/chart")} className={classes.back}>
-                  Back to Chart
-                </Button>
-                <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
-                  Edit
-                </Button>
-                <Button onClick={handleDestroy} className={classes.back}>
-                  Delete
-                </Button>
-              </Grid>
-              <Grid item>
-                {/* <Button className={classes.back}>
-                  Go Back
-                </Button> */}
-                {/* <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                  Go Back
-                </Typography> */}
-              </Grid>
-            </Grid>
-            {/* <Grid item>
-              <Typography variant="subtitle1"> <img className={classes.thumbnail} src={card.suit_thumbnail} /></Typography>
-            </Grid> */}
-          </Grid>
-          <Grid item>
-            <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
-              <img className={classes.img} alt="complex" src={card.img} />
-            </ButtonBase>
-          </Grid>
-        </Grid>
-      </Paper>
-      </Fade>
-      </ThemeProvider>
-    </div>
-
-    </>
+                <Paper className={classes.paper}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm container>
+                            <Grid item xs container direction="column" spacing={2}>
+                                <Grid item xs>
+                                    <Typography gutterBottom variant="subtitle1">
+                                        Question: {reading.question}
+                                    </Typography>
+                                    <Typography gutterBottom variant="subtitle1">
+                                        {cards[1] ? 
+                                            `Current Card Selection: ${card.name} | ${card.arcana_type} Arcana`
+                                        : `You drew: ${card.name} | ${card.arcana_type} Arcana` }
+                                    </Typography>
+                                    <Typography variant="body2" gutterBottom>
+                                        Rating: {reading.rating}
+                                    </Typography>
+                                    <Typography variant="body2" gutterBottom>
+                                        Descriptors: {reading.descriptors}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                        Notes: {reading.notes}
+                                    </Typography>
+                                    <Button onClick={() => history.push("/chart")} className={classes.back}>
+                                        Back to Chart
+                                    </Button>
+                                    <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
+                                        Edit
+                                    </Button>
+                                    <Button onClick={handleDestroy} className={classes.back}>
+                                        Delete
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item>
+                            <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
+                            <img className={classes.img} alt="complex" src={card.img} />
+                            </ButtonBase>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </Fade>
+            </ThemeProvider>
+        </div>
+        </>
     )
 
     return (
         <div className={classes.root}>
             <ThemeProvider theme={fontTheme}>
-          <CssBaseline />
+            <CssBaseline />
             <Fade in={checked}>
-      <Paper className={classes.paper}>
-        <Grid container spacing={2}>
-          {/* <Grid item>
-            <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
-              <img className={classes.img} alt="complex" src={card.img} />
-            </ButtonBase>
-          </Grid> */}
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-              <Typography gutterBottom variant="subtitle1">
-                Question: {reading.question}
-                </Typography>
-                <Typography gutterBottom variant="subtitle1">
-                  You drew: {card.name} | {card.arcana_type} Arcana
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                    Rating: {reading.rating}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                    Descriptors: {reading.descriptors}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  Notes: {reading.notes}
-                </Typography>
-                <Button onClick={() => history.push("/chart")} className={classes.back}>
-                  Back to Chart
-                </Button>
-                <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
-                  Edit
-                </Button>
-                <Button onClick={handleDestroy} className={classes.back}>
-                  Delete
-                </Button>
-              </Grid>
-              <Grid item>
-                {/* <Button className={classes.back}>
-                  Go Back
-                </Button> */}
-                {/* <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                  Go Back
-                </Typography> */}
-              </Grid>
-            </Grid>
-            {/* <Grid item>
-              <Typography variant="subtitle1"> <img className={classes.thumbnail} src={card.suit_thumbnail} /></Typography>
-            </Grid> */}
-          </Grid>
-          <Grid item>
-            <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
-              <img className={classes.img} alt="complex" src={card.img} />
-            </ButtonBase>
-          </Grid>
-        </Grid>
-      </Paper>
-      </Fade>
-      </ThemeProvider>
-    </div>
+                <Paper className={classes.paper}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm container>
+                            <Grid item xs container direction="column" spacing={2}>
+                                <Grid item xs>
+                                    <Typography gutterBottom variant="subtitle1">
+                                        Question: {reading.question}
+                                    </Typography>
+                                    <Typography gutterBottom variant="subtitle1">
+                                        You drew: {card.name} | {card.arcana_type} Arcana
+                                    </Typography>
+                                    <Typography variant="body2" gutterBottom>
+                                        Rating: {reading.rating}
+                                    </Typography>
+                                    <Typography variant="body2" gutterBottom>
+                                        Descriptors: {reading.descriptors}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                        Notes: {reading.notes}
+                                    </Typography>
+                                    <Button onClick={() => history.push("/chart")} className={classes.back}>
+                                        Back to Chart
+                                    </Button>
+                                    <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
+                                        Edit
+                                    </Button>
+                                    <Button onClick={handleDestroy} className={classes.back}>
+                                        Delete
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item>
+                            <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
+                            <img className={classes.img} alt="complex" src={card.img} />
+                            </ButtonBase>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </Fade>
+            </ThemeProvider>
+        </div>
     );
 
 }
