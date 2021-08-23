@@ -23,8 +23,7 @@ import ReadingEdit from "./ReadingEdit";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import DrawnSingleView from "./DrawnSingleView";
-
-
+import UndrawnSingleCustomReading from "./UndrawnSingleCustomReading"
 
 
 function App() {
@@ -80,6 +79,9 @@ function App() {
     <Switch>
       <Route exact path="/">
         <Home></Home>
+      </Route>
+      <Route exact path="/single">
+        <UndrawnSingleCustomReading></UndrawnSingleCustomReading>
       </Route>
       <Route exact path="/readings/:id">
         <DrawnSingleView></DrawnSingleView>

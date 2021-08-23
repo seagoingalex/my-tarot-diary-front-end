@@ -139,8 +139,8 @@ function ReadingView() {
                 <Typography variant="body2" color="textSecondary">
                   Notes: {reading.notes}
                 </Typography>
-                <Button onClick={() => history.goBack()} className={classes.back}>
-                  Go Back
+                <Button onClick={() => history.push("/chart")} className={classes.back}>
+                  Back to Chart
                 </Button>
                 <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
                   Edit

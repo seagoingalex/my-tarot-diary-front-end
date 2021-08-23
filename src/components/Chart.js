@@ -32,6 +32,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 
+//Material UI for tabs
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import PhoneIcon from '@material-ui/icons/Phone';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import PersonPinIcon from '@material-ui/icons/PersonPin';
+import Brightness3Icon from '@material-ui/icons/Brightness3';
+import ViewWeekIcon from '@material-ui/icons/ViewWeek';
+
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -45,6 +55,13 @@ const fontTheme = createTheme({
 
 
 const useStyles = makeStyles((theme) => ({
+    tabroot: {
+        flexGrow: 1,
+        maxWidth: 500,
+        margin: 'auto',
+        marginBottom: theme.spacing(2),  
+          
+      },
     root: {
       width: '100%',
       maxWidth: 360,
@@ -87,19 +104,40 @@ function Chart() {
     const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(false);
 
+    const [value, setValue] = React.useState(0);
 
     const user = useSelector(state => state.loggedInUser)
 
     const [chart, setChart] = useState(null)
+    const [dailyDrawView, setDailyDrawView] = useState(true)
+    const [chartView, setChartView] = useState(null)
+
+    const handleTabChange = (event, newValue) => {
+        console.log(event.target.value)
+        const selectedReadingType = chart.filter((reading) => {
+            if(!dailyDrawView) {
+                return reading.drawing_type === "Daily Drawing"
+            } else {
+                return reading.drawing_type === "Custom Single Drawing"
+            }
+        })
+
+        setDailyDrawView(!dailyDrawView);
+        setValue(newValue)
+        setChartView(selectedReadingType)
+      };
 
     useEffect(() => {
         fetch(`http://localhost:3000/${user.id}/chart`)
             .then(r => r.json())
-            .then(data => 
-                setChart(data))
+            .then(data => {
+                setChart(data)
+                setChartView(data.filter((reading) => reading.drawing_type === "Daily Drawing"))
+            })
+
     }, [])
 
-    if (!chart) return (
+    if (!chartView) return (
         <>
         <Spinner className={classes.spinner} animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -109,12 +147,29 @@ function Chart() {
 
     // if (!chart) return <h2>Loading...</h2>
 
-
+if(dailyDrawView) {
     return (
         <>
         <ThemeProvider theme={fontTheme}>
+
+            
+
         <div className={classes.demo}>
-            {chart.map((reading) => (
+        <Paper square className={classes.tabroot}>
+        <Tabs
+            value={value}
+            onChange={handleTabChange}
+            variant="fullWidth"
+            indicatorColor="secondary"
+            textColor="secondary"
+            aria-label="icon label tabs example"
+        >
+            <Tab icon={<Brightness3Icon />} label="DAILY DRAWS" />
+            <Tab icon={<ViewWeekIcon />} label="CUSTOM READINGS" />
+        </Tabs>
+        </Paper>
+
+            {chartView.map((reading) => (
                 <List className={classes.root}>
                 <ListItem>
                   <ListItemAvatar>
@@ -144,6 +199,61 @@ function Chart() {
 
         </>
       );
+    }
+
+    else {
+        return (
+            <>
+            <ThemeProvider theme={fontTheme}>
+    
+                
+    
+            <div className={classes.demo}>
+            <Paper square className={classes.tabroot}>
+            <Tabs
+                value={value}
+                onChange={handleTabChange}
+                variant="fullWidth"
+                indicatorColor="secondary"
+                textColor="secondary"
+                aria-label="icon label tabs example"
+            >
+                <Tab icon={<Brightness3Icon />} label="DAILY DRAWS" />
+                <Tab icon={<ViewWeekIcon />} label="CUSTOM READINGS" />
+            </Tabs>
+            </Paper>
+    
+                {chartView.map((reading) => (
+                    <List className={classes.root}>
+                    <ListItem>
+                      <ListItemAvatar>
+                      {/* <ListItemAvatar>
+                      
+                        {/* <Avatar src={reading.cards[0].suit_thumbnail}> */}
+                          {/* <ImageIcon /> */}
+                          <img className={classes.thumbnail} src={reading.cards[0].suit_thumbnail}></img>
+                        {/* </Avatar>
+                      </ListItemAvatar> */}
+                      </ListItemAvatar>
+    
+                      <ListItemText primary={reading.created_at.substring(0,10)} secondary={reading.question.substring(0,28) + "..."} />
+                      <ListItemSecondaryAction>
+                              Rating: {reading.rating}
+                              <IconButton component={Link} to={`/chart/${reading.id}`} edge="end" aria-label="delete">
+                                <DoubleArrowIcon />
+                              </IconButton>
+                            </ListItemSecondaryAction>
+                            
+                    </ListItem>
+                    <Divider></Divider>
+                    </List>
+                ))}
+            </div>
+            </ThemeProvider>
+    
+            </>
+          );
+    }
 
     return (
         <>
