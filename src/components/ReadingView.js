@@ -140,6 +140,22 @@ function ReadingView() {
         </>
     );
 
+    function handleDestroy() {
+        
+        async function deleteReading() {
+            const res = await fetch(`/readings/${reading.id}`, {
+                method: 'DELETE'
+            })
+            if (res.ok) {
+                // console.log("Successfully deleted!")
+                // setUpcomingAppointments(upcomingAppointments)
+                history.push("/chart")
+            }
+        }
+
+        deleteReading();
+    }
+
     if (reading.drawing_type === "Custom Drawing") return(
         <>
 {cards[1] ? 
@@ -208,6 +224,9 @@ function ReadingView() {
                 <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
                   Edit
                 </Button>
+                <Button onClick={handleDestroy} className={classes.back}>
+                  Delete
+                </Button>
               </Grid>
               <Grid item>
                 {/* <Button className={classes.back}>
@@ -271,6 +290,9 @@ function ReadingView() {
                 </Button>
                 <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
                   Edit
+                </Button>
+                <Button onClick={handleDestroy} className={classes.back}>
+                  Delete
                 </Button>
               </Grid>
               <Grid item>

@@ -46,6 +46,8 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+import Fade from '@material-ui/core/Fade';
+
 const fontTheme = createTheme({
     typography: {
       fontFamily: [
@@ -105,6 +107,8 @@ function Chart() {
     const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(false);
 
+    const [checked, setChecked] = React.useState(false);
+
     const [value, setValue] = React.useState(0);
 
     const user = useSelector(state => state.loggedInUser)
@@ -134,6 +138,7 @@ function Chart() {
             .then(data => {
                 setChart(data)
                 setChartView(data.filter((reading) => reading.drawing_type === "Daily Drawing"))
+                setChecked(true)
             })
 
     }, [])
@@ -154,7 +159,7 @@ if(dailyDrawView) {
         <ThemeProvider theme={fontTheme}>
 
             
-
+        <Fade in={checked}>
         <div className={classes.demo}>
         <Paper square className={classes.tabroot}>
         <Tabs
@@ -196,6 +201,7 @@ if(dailyDrawView) {
                 </List>
             ))}
         </div>
+        </Fade>
         </ThemeProvider>
 
         </>
