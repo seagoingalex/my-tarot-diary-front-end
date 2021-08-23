@@ -143,6 +143,7 @@ function ReadingView() {
     if (reading.drawing_type === "Custom Drawing") return(
         <>
 {cards[1] ? 
+    <Fade in={checked}>
 <div className={classes.imageroot}>
       <ImageList className={classes.imageList} cols={3}>
         {cards.map((card) => (
@@ -164,6 +165,7 @@ function ReadingView() {
         ))}
       </ImageList>
     </div>
+    </Fade>
          : null }
         <div className={classes.root}>
             <ThemeProvider theme={fontTheme}>
