@@ -1,16 +1,12 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import "@fontsource/cairo"
-
-// import logo from './logo.svg';
-import './App.css';
-import { Provider, useDispatch, useSelector } from 'react-redux'
-// import store from '../store/store'
-import { changeUsernameInput, changePasswordInput, setLoggedInUser } from '../store/reducers/reducerSlice'
+//React
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import Login from "./Login";
+//Redux
+import { useDispatch, useSelector } from 'react-redux'
+import { changeUsernameInput, changePasswordInput, setLoggedInUser } from '../store/reducers/reducerSlice'
+
+// Child component imports
 import NavBar from "./NavBar";
 import Home from "./Home";
 import Profile from "./Profile";
@@ -26,29 +22,19 @@ import DrawnSingleView from "./DrawnSingleView";
 import UndrawnSingleCustomReading from "./UndrawnSingleCustomReading"
 import UndrawnMultiCustomReading from "./UndrawnMultiCustomReading"
 
+//Styling imports
+import "@fontsource/cairo"
+import 'bootstrap/dist/css/bootstrap.min.css';
+// import logo from './logo.svg';
+import './App.css';
+
+//Material UI imports
 
 function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const usernameInput = useSelector(state => state.usernameInput)
   const passwordInput = useSelector(state => state.passwordInput)
   const loggedInUser = useSelector(state => state.loggedInUser)
-
-  const handleUsernameChange = (e) => {
-    console.log(e)
-    dispatch(changeUsernameInput(e.target.value))
-    // dispatch({ type: "CHANGE_USERNAME_INPUT", payload: e.target.value })
-  }
-
-  const handlePasswordChange = (e) => {
-    console.log(e)
-    dispatch(changePasswordInput(e.target.value))
-    // dispatch({ type: "CHANGE_PASSWORD_INPUT", payload: e.target.value })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log (usernameInput, passwordInput)
-  }
 
   useEffect(() => {
     fetch("http://localhost:3000/me").then((r) => {
@@ -58,8 +44,6 @@ function App() {
       }
     })
   }, []);
-
-  // if (!loggedInUser) return <Login></Login>
 
   if (!loggedInUser) return (
     
@@ -71,8 +55,7 @@ function App() {
         <SignUpForm></SignUpForm>
       </Route>
     </Switch>
-  
-    )
+  )
 
   return (
     <>
@@ -110,14 +93,6 @@ function App() {
         <CardView></CardView>
       </Route>
     </Switch>
-
-    {/* <form onSubmit={handleSubmit}>
-      <input type="text" onChange={handleUsernameChange}>
-      </input>
-      <input type="text" onChange={handlePasswordChange}>
-      </input>
-      <input type="submit" value="Submit"></input>
-    </form> */}
     </>
   );
 }
