@@ -74,6 +74,8 @@ const useStyles = makeStyles((theme) => ({
     },
     demo: {
         backgroundColor: theme.palette.background.paper,
+        height: 1250,
+        
     },
     title: {
         margin: theme.spacing(4, 0, 2),
@@ -200,6 +202,7 @@ if(dailyDrawView) {
                 <Divider></Divider>
                 </List>
             ))}
+            
         </div>
         </Fade>
         </ThemeProvider>
