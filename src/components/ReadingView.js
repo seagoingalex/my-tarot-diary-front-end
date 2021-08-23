@@ -21,6 +21,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+//Material UI carousel attempt for multi card spread
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
+import ImageListItemBar from '@material-ui/core/ImageListItemBar';
+import IconButton from '@material-ui/core/IconButton';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+// import itemData from './itemData';
+
 const fontTheme = createTheme({
     typography: {
       fontFamily: [
@@ -72,7 +81,28 @@ const useStyles = makeStyles(theme => ({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    imageroot: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        backgroundColor: theme.palette.background.paper,
+      },
+      imageList: {
+        flexWrap: 'nowrap',
+        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+        transform: 'translateZ(0)',
+      },
+      title: {
+        // color: theme.palette.secondary.light,
+        color: "White",
+        
+      },
+      titleBar: {
+        background:
+          'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+      },
   }));
 
 function ReadingView() {
@@ -91,6 +121,7 @@ function ReadingView() {
         fetch(`http://localhost:3000/readings/${id}`)
             .then(r => r.json())
             .then(data => {
+                setCards(data.cards)
                 setReading(data)
                 setCard(data.cards[0])
                 setChecked(true)
@@ -108,6 +139,100 @@ function ReadingView() {
         </Spinner>
         </>
     );
+
+    if (reading.drawing_type === "Custom Drawing") return(
+        <>
+{cards[1] ? 
+<div className={classes.imageroot}>
+      <ImageList className={classes.imageList} cols={3}>
+        {cards.map((card) => (
+          <ImageListItem key={card.img}>
+            <img onClick={() => setCard(card)} src={card.img} alt={card.name} />
+            <ImageListItemBar
+              title={card.name}
+              classes={{
+                root: classes.titleBar,
+                title: classes.title,
+              }}
+              actionIcon={
+                <IconButton onClick={() => setCard(card)} aria-label={`star ${card.name}`}>
+                  <ArrowDownwardIcon className={classes.title} />
+                </IconButton>
+              }
+            />
+          </ImageListItem>
+        ))}
+      </ImageList>
+    </div>
+         : null }
+        <div className={classes.root}>
+            <ThemeProvider theme={fontTheme}>
+          <CssBaseline />
+            <Fade in={checked}>
+
+       
+
+      <Paper className={classes.paper}>
+        <Grid container spacing={2}>
+          {/* <Grid item>
+            <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
+              <img className={classes.img} alt="complex" src={card.img} />
+            </ButtonBase>
+          </Grid> */}
+          <Grid item xs={12} sm container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+              <Typography gutterBottom variant="subtitle1">
+                Question: {reading.question}
+                </Typography>
+                <Typography gutterBottom variant="subtitle1">
+                {cards[1] ? 
+                  `Current Card Selection: ${card.name} | ${card.arcana_type} Arcana`
+                  
+                  : `You drew: ${card.name} | ${card.arcana_type} Arcana` }
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                    Rating: {reading.rating}
+                </Typography>
+                <Typography variant="body2" gutterBottom>
+                    Descriptors: {reading.descriptors}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Notes: {reading.notes}
+                </Typography>
+                <Button onClick={() => history.push("/chart")} className={classes.back}>
+                  Back to Chart
+                </Button>
+                <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
+                  Edit
+                </Button>
+              </Grid>
+              <Grid item>
+                {/* <Button className={classes.back}>
+                  Go Back
+                </Button> */}
+                {/* <Typography variant="body2" style={{ cursor: 'pointer' }}>
+                  Go Back
+                </Typography> */}
+              </Grid>
+            </Grid>
+            {/* <Grid item>
+              <Typography variant="subtitle1"> <img className={classes.thumbnail} src={card.suit_thumbnail} /></Typography>
+            </Grid> */}
+          </Grid>
+          <Grid item>
+            <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
+              <img className={classes.img} alt="complex" src={card.img} />
+            </ButtonBase>
+          </Grid>
+        </Grid>
+      </Paper>
+      </Fade>
+      </ThemeProvider>
+    </div>
+
+    </>
+    )
 
     return (
         <div className={classes.root}>
@@ -170,25 +295,6 @@ function ReadingView() {
       </ThemeProvider>
     </div>
     );
-
-    return (
-        <>
-        <h1>This is the Reading View component.</h1>
-        <h1>Question: {reading.question}</h1>
-        {/* <h1>You drew: {cards.first.name}</h1> */}
-        <h1>You drew: {card.name}</h1>
-        <h2>Rating: {reading.rating}</h2>
-        <h2>Descriptors: {reading.descriptors}</h2>
-        <h3>Notes: {reading.notes}</h3>
-        <Link to={`/chart/${reading.id}/edit`}>
-            <button> Edit Entry </button>
-        </Link>
-        <button onClick={() => history.goBack()}>Back</button>
-        <Link to={`/library/${card.id}`}>
-            <img src={card.img}></img>
-        </Link>
-        </>
-    )
 
 }
 
