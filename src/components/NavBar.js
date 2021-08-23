@@ -120,7 +120,7 @@ function NavBar() {
               <ListItemIcon className={classes.iconColor}><Brightness3Icon /></ListItemIcon>
               <ListItemText>Daily Reading</ListItemText>
             </ListItem>
-          <ListItem>
+          <ListItem button component={Link} to="/single">
               <ListItemIcon className={classes.iconColor}><PanToolIcon /></ListItemIcon>
               <ListItemText>Single Card Drawing</ListItemText>
             </ListItem>

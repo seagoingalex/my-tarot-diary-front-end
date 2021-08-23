@@ -163,7 +163,7 @@ function ReadingEdit() {
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
               <Typography gutterBottom variant="subtitle1">
-                Question: {reading.question}
+                You asked: {reading.question}
                 </Typography>
                 <Typography gutterBottom variant="subtitle1">
                   You drew: {card.name} | {card.arcana_type} Arcana
