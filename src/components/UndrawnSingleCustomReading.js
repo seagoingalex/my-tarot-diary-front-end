@@ -130,7 +130,7 @@ function UndrawnSingleCustomReading() {
                     read_requester_type: "PersonalProfile",
                     reader_id: user.id,
                     reader_type: "PersonalProfile",
-                    drawing_type: "Custom Single Drawing",
+                    drawing_type: "Custom Drawing",
                     question: question
                     // rating: "TBD"
                 })
