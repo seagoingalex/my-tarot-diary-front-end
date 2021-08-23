@@ -41,6 +41,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
 import ViewWeekIcon from '@material-ui/icons/ViewWeek';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -235,12 +236,15 @@ if(dailyDrawView) {
                         {/* </Avatar>
                       </ListItemAvatar> */}
                       </ListItemAvatar>
-    
-                      <ListItemText primary={reading.created_at.substring(0,10)} secondary={reading.question.substring(0,28) + "..."} />
+                      {reading.cards[1] ? <ListItemText primary={reading.created_at.substring(0,10) + " | Multi"} secondary={reading.question.substring(0,28) + "..."} />
+                                : 
+                      <ListItemText primary={reading.created_at.substring(0,10) + " | Single"} secondary={reading.question.substring(0,28) + "..."} />
+                        }
                       <ListItemSecondaryAction>
                               Rating: {reading.rating}
                               <IconButton component={Link} to={`/chart/${reading.id}`} edge="end" aria-label="delete">
-                                <DoubleArrowIcon />
+                              <DoubleArrowIcon />
+                                
                               </IconButton>
                             </ListItemSecondaryAction>
                             
