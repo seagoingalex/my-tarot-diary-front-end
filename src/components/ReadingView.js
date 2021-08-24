@@ -216,9 +216,14 @@ function ReadingView() {
                                     <Typography variant="body2" color="textSecondary">
                                         Notes: {reading.notes}
                                     </Typography>
-                                    <Button onClick={() => history.push("/chart")} className={classes.back}>
-                                        Back to Chart
-                                    </Button>
+                                    {personalProfileToggledOn ? 
+                                        <Button onClick={() => history.push("/chart")} className={classes.back}>
+                                            Back to Chart
+                                         </Button> :
+                                        <Button onClick={() => history.push("/friend-chart")} className={classes.back}>
+                                            Back to Chart
+                                        </Button>    
+                                    }
                                     <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
                                         Edit
                                     </Button>

@@ -194,7 +194,7 @@ function PublicChart() {
                                         <img className={classes.thumbnail} src={reading.cards[0].suit_thumbnail}></img>
                                     </ListItemAvatar>
                                     {reading.cards[1] ? 
-                                        <ListItemText primary={reading.created_at.substring(0,10) + " | Multi"} secondary={reading.question.substring(0,28) + "..."} />
+                                        <ListItemText primary={reading.created_at.substring(0,10) + " | Multi"} secondary={reading.read_requester.first_name + " " + reading.read_requester.last_name + " | " +  reading.question.substring(0,14) + "..."} />
                                     : 
                                         <ListItemText primary={reading.created_at.substring(0,10) + " | Single"} secondary={reading.read_requester.first_name + " " + reading.read_requester.last_name + " | " +  reading.question.substring(0,14) + "..."}/>
                                     }

@@ -33,9 +33,20 @@ const fontTheme = createTheme({
     },
   });
 
-const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles((theme) => ({
+    undrawnroot: {
+      flexGrow: 1,
+    },
+    undrawnpaper: {
+      height: 140,
+      width: 100,
+    },
+    undrawncontrol: {
+      padding: theme.spacing(2),
+    },
     container: {
       display: 'flex',
+      marginTop: theme.spacing(-12),  
     },
     paper: {
     //   margin: theme.spacing(1),
@@ -52,56 +63,52 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         marginTop: theme.spacing(2),  
-        marginBottom: theme.spacing(-4),      
-      },
-      paper: {
-        padding: theme.spacing(1),
-        margin: 'auto',
-        maxWidth: 1000,
-        maxHeight: 580,
-      },
-      image: {
-        width: 330,
-        height: 550,
-      },
-      img: {
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-      },
-      thumbnail: {
-          height: 40,
-          width: 40,
-      },
-      back: {
-          margin: theme.spacing(1, 0, 2,),
-          backgroundColor: "black",
-          color: "white",
-      },
-      edit: {
-          margin: theme.spacing(1, 1, 2,),
-          backgroundColor: "black",
-          color: "white",
-      },
-      form: {
-          '& > *': {
-            margin: theme.spacing(1),
-            width: '75ch',
-          },
-      },
-      button: {
-        display: 'block',
-        marginTop: theme.spacing(2),
-      },
-      formControl: {
+        marginBottom: theme.spacing(-7),      
+    },
+    paper: {
+      padding: theme.spacing(1),
+      margin: 'auto',
+      maxWidth: 1000,
+      maxHeight: 580,
+    },
+    image: {
+      width: 330,
+      height: 550,
+    },
+    img: {
+      margin: 'auto',
+      display: 'block',
+      maxWidth: '100%',
+      maxHeight: '100%',
+    },
+    thumbnail: {
+      height: 40,
+      width: 40,
+    },
+    back: {
+      margin: theme.spacing(1, 0, 2,),
+      backgroundColor: "black",
+      color: "white",
+    },
+    edit: {
+      margin: theme.spacing(1, 1, 2,),
+      backgroundColor: "black",
+      color: "white",
+    },
+    form: {
+      '& > *': {
         margin: theme.spacing(1),
-        minWidth: 120,
+        width: '75ch',
       },
-      frienddrop: {
-        marginTop: theme.spacing(-1),
-        marginBottom: theme.spacing(1)
-      }
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    frienddrop: {
+      marginTop: theme.spacing(-1),
+      marginBottom: theme.spacing(1)
+    }
   }));
 
 function UndrawnSingleCustomReading() {
@@ -113,7 +120,6 @@ function UndrawnSingleCustomReading() {
     const [open, setOpen] = useState(false);
     const [friends, setFriends] = useState([])
     const [selectedFriend, setSelectedFriend] = useState('');
-    const [addFriendSelected, selectAddFriend] = useState(false)
     
     const user = useSelector(state => state.loggedInUser)
     const dispatch = useDispatch();
@@ -132,31 +138,26 @@ function UndrawnSingleCustomReading() {
     }
 
     function handleFriendFirstNameChange(e) {
-        // setQuestion({ ...question, [e.target.name]: e.target.value})
-        setFriendFirstName(e.target.value)
-    }
+      // setQuestion({ ...question, [e.target.name]: e.target.value})
+      setFriendFirstName(e.target.value)
+  }
 
     function handleFriendLastNameChange(e) {
         // setQuestion({ ...question, [e.target.name]: e.target.value})
         setFriendLastName(e.target.value)
     }
 
-
     const handleFriendChange = (event) => {
-        setSelectedFriend(event.target.value);
-      };
-    
+      setSelectedFriend(event.target.value);
+    };
+  
     const handleClose = () => {
         setOpen(false);
       };
-    
+  
     const handleOpen = () => {
         setOpen(true);
       };
-
-    const handleAddFriendSelected = () => {
-        selectAddFriend(true)
-    }
 
     useEffect(() => {
         fetch(`http://localhost:3000/${user.id}/friends`)
@@ -170,7 +171,6 @@ function UndrawnSingleCustomReading() {
     }, [friends])      
 
     function handleFriendSave(e) {
-        console.log("this worked")
         e.preventDefault();
 
         async function friendSave() {

@@ -119,6 +119,8 @@ function UndrawnMultiCustomReading() {
     const [secondCardImage, setSecondCardImage] = useState(cardBack)
     const [thirdCardImage, setThirdCardImage] = useState(cardBack)
     const [question, setQuestion] = useState("")
+    const [friendFirstName, setFriendFirstName] = useState("")
+    const [friendLastName, setFriendLastName] = useState("")
     const [checked, setChecked] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = React.useState(false);
@@ -137,6 +139,16 @@ function UndrawnMultiCustomReading() {
     function handleQuestionChange(e) {
         // setQuestion({ ...question, [e.target.name]: e.target.value})
         setQuestion(e.target.value)
+    }
+
+    function handleFriendFirstNameChange(e) {
+      // setQuestion({ ...question, [e.target.name]: e.target.value})
+      setFriendFirstName(e.target.value)
+  }
+
+    function handleFriendLastNameChange(e) {
+        // setQuestion({ ...question, [e.target.name]: e.target.value})
+        setFriendLastName(e.target.value)
     }
 
     const handleFriendChange = (event) => {
@@ -161,6 +173,33 @@ function UndrawnMultiCustomReading() {
             }
         )
     }, []) 
+
+    function handleFriendSave(e) {
+        e.preventDefault();
+
+        async function friendSave() {
+            const res = await fetch(`http://localhost:3000/friends`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    public_profile_id: user.id,
+                    first_name: friendFirstName,
+                    last_name: friendLastName,
+                })
+            })
+
+            if(res.ok) {
+                const newFriend = await res.json()
+                setFriends([...friends, newFriend])
+                // setSelectedFriend(`${newFriend.first_name + " " + newFriend.last_name}`)
+                setSelectedFriend('')
+                // history.push(`/single`)
+            }
+        }
+        friendSave();
+    }
 
     function handleMultiCustomDrawing(e) {
         e.preventDefault();
@@ -337,6 +376,9 @@ function UndrawnMultiCustomReading() {
                                             {friends.map((friend) => (
                                                 <MenuItem value={friend}>{friend.first_name} {friend.last_name}</MenuItem>
                                             ))}                                                
+                                                <MenuItem value={"Add Friend +"}>
+                                                    <em>Add Friend +</em>
+                                                </MenuItem>
                                                 {/* <MenuItem value="">
                                                     <em>None</em>
                                                 </MenuItem>
@@ -374,6 +416,40 @@ function UndrawnMultiCustomReading() {
                 </Grid>
               </Paper>
             </Fade>
+            {selectedFriend === "Add Friend +" ? 
+                                    <Paper className={classes.paper}>
+                                    <h1>Add a friend</h1>
+                                    <form className={classes.form} onSubmit={handleFriendSave}>                
+                                        <TextField
+                                            id="outlined-multiline-flexible"
+                                            label="Enter Your Friend's First Name"
+                                            multiline
+                                            maxRows={4}
+                                            // value={question}
+                                            onChange={handleFriendFirstNameChange}
+                                            variant="outlined"
+                                            placeholder="First Name"
+                                            name="rating"
+                                        />
+                                        <TextField
+                                            id="outlined-multiline-flexible"
+                                            label="Enter Your Friend's Last Name"
+                                            multiline
+                                            maxRows={4}
+                                            // value={question}
+                                            onChange={handleFriendLastNameChange}
+                                            variant="outlined"
+                                            placeholder="Last Name"
+                                            name="rating"
+                                        />
+                                        <Button type="submit" value={isLoading ? "Loading..." : "Save"} className={classes.edit}>
+                                            Save
+                                        </Button>
+                                    </form>
+                                    </Paper>
+                                    : null}
+
+
             </ThemeProvider>
         </div>
         <Fade in={checked}>
