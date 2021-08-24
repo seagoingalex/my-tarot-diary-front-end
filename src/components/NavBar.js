@@ -168,11 +168,17 @@ function NavBar() {
             </ListSubheader>
           }
         >
-
+          {personalProfileToggledOn ? 
             <ListItem button component={Link} to="/chart">
               <ListItemIcon className={classes.iconColor}><BallotIcon /></ListItemIcon>
-              <ListItemText>My Chart</ListItemText>
+              <ListItemText>My Personal Chart</ListItemText>
             </ListItem>
+          :
+          <ListItem button component={Link} to="/friend-chart">
+          <ListItemIcon className={classes.iconColor}><BallotIcon /></ListItemIcon>
+          <ListItemText>My Friend Chart</ListItemText>
+        </ListItem>
+          }
             <ListItem button component={Link} to="/profile">
               <ListItemIcon className={classes.iconColor}><PersonIcon /></ListItemIcon>
               <ListItemText>Profile</ListItemText>

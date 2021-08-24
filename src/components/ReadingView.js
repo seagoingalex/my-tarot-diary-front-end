@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom"
 
+//Redux
+import { useSelector } from 'react-redux'
+
 // Material UI imports
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -105,7 +108,10 @@ function ReadingView() {
     const [reading, setReading] = useState([])
     const [cards, setCards] = useState([])
     const [card, setCard] = useState([])
+    const [friend, setFriend] = useState([])
     const [checked, setChecked] = React.useState(false);
+
+    const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
 
     const { id } = useParams()
     const history = useHistory();
@@ -119,6 +125,7 @@ function ReadingView() {
                 setReading(data)
                 setCard(data.cards[0])
                 setChecked(true)
+                setFriend(data.read_requester)
             })
     }, [id])
 
@@ -136,10 +143,13 @@ function ReadingView() {
             const res = await fetch(`/readings/${reading.id}`, {
                 method: 'DELETE'
             })
-            if (res.ok) {
+            
+            if (res.ok && personalProfileToggledOn) {
                 // console.log("Successfully deleted!")
                 // setUpcomingAppointments(upcomingAppointments)
                 history.push("/chart")
+            } else if(res.ok && !personalProfileToggledOn) {
+                history.push("/friend-chart")
             }
         }
 
@@ -183,9 +193,14 @@ function ReadingView() {
                         <Grid item xs={12} sm container>
                             <Grid item xs container direction="column" spacing={2}>
                                 <Grid item xs>
-                                    <Typography gutterBottom variant="subtitle1">
+                                    {personalProfileToggledOn ? 
+                                        <Typography gutterBottom variant="subtitle1">
                                         Question: {reading.question}
-                                    </Typography>
+                                        </Typography> :
+                                        <Typography gutterBottom variant="subtitle1">
+                                        {friend.first_name} {friend.last_name}'s Question: {reading.question}
+                                        </Typography>
+                                    }
                                     <Typography gutterBottom variant="subtitle1">
                                         {cards[1] ? 
                                             `Current Card Selection: ${card.name} | ${card.arcana_type} Arcana`
@@ -251,9 +266,17 @@ function ReadingView() {
                                     <Typography variant="body2" color="textSecondary">
                                         Notes: {reading.notes}
                                     </Typography>
-                                    <Button onClick={() => history.push("/chart")} className={classes.back}>
-                                        Back to Chart
-                                    </Button>
+                                    {personalProfileToggledOn ? 
+                                        <Button onClick={() => history.push("/chart")} className={classes.back}>
+                                            Back to Chart
+                                         </Button> :
+                                        <Button onClick={() => history.push("/friend-chart")} className={classes.back}>
+                                            Back to Chart
+                                        </Button>    
+                                    }
+                                    
+                                    
+                                    
                                     <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
                                         Edit
                                     </Button>
