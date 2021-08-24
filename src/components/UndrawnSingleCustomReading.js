@@ -202,10 +202,9 @@ function UndrawnSingleCustomReading() {
 
     function handleSingleCustomDrawing(e) {
         e.preventDefault();
-        if(selectedFriend === '' || selectedFriend === 'Add Friend +') {
+        if(!personalProfileToggledOn && selectedFriend === '' || selectedFriend === 'Add Friend +') {
             console.log("No friend selected")
         } else {
-        
         setIsLoading(true);
         async function dailyReadingCreate() {
             if(personalProfileToggledOn) {
