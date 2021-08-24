@@ -16,6 +16,7 @@ const slice = createSlice({
         loggedInUser: null,
         usernameInput: "",
         passwordInput: "",
+        personalProfileToggledOn: true,
         entities: [],
         status: "idle"
     },
@@ -28,6 +29,9 @@ const slice = createSlice({
         },
         setLoggedInUser: (state, action) => {
             state.loggedInUser = action.payload
+        },
+        togglePersonalProfile: (state, action) => {
+            state.personalProfileToggledOn = action.payload
         }
     },
     extraReducers: {
@@ -42,10 +46,10 @@ const slice = createSlice({
 })
 
 //actions
-const { changeUsernameInput, changePasswordInput, setLoggedInUser } = slice.actions
+const { changeUsernameInput, changePasswordInput, setLoggedInUser, togglePersonalProfile } = slice.actions
 
 //exports
-export { changeUsernameInput, changePasswordInput, setLoggedInUser }
+export { changeUsernameInput, changePasswordInput, setLoggedInUser, togglePersonalProfile }
 export default slice.reducer
 
 // V Original walkthrough from Joe below

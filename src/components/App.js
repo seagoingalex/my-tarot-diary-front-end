@@ -11,6 +11,7 @@ import NavBar from "./NavBar";
 import Home from "./Home";
 import Profile from "./Profile";
 import Chart from "./Chart";
+import PublicChart from "./PublicChart"
 import CardList from "./CardList";
 import Cards from "./Cards";
 import CardView from "./CardView";
@@ -78,6 +79,9 @@ function App() {
       </Route>
       <Route exact path="/chart">
         <Chart></Chart>
+      </Route>
+      <Route exact path="/friend-chart">
+        <PublicChart></PublicChart>
       </Route>
       <Route exact path="/chart/:id">
         <ReadingView></ReadingView>

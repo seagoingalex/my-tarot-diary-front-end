@@ -1,15 +1,25 @@
 //React
-import React, { useState } from "react";
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom"
 
-//Form Material UI imports
+//Redux
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoggedInUser, togglePersonalProfile } from '../store/reducers/reducerSlice'
+
+//Material UI imports
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+
+//New Material UI for Controlled Open Select
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
 
 //Image imports
 import cardBack from '../images/card-back.jpeg'
@@ -23,9 +33,20 @@ const fontTheme = createTheme({
     },
   });
 
-const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles((theme) => ({
+    undrawnroot: {
+      flexGrow: 1,
+    },
+    undrawnpaper: {
+      height: 140,
+      width: 100,
+    },
+    undrawncontrol: {
+      padding: theme.spacing(2),
+    },
     container: {
       display: 'flex',
+      marginTop: theme.spacing(-12),  
     },
     paper: {
     //   margin: theme.spacing(1),
@@ -42,52 +63,67 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         marginTop: theme.spacing(2),  
-        marginBottom: theme.spacing(-4),      
+        marginBottom: theme.spacing(-7),      
+    },
+    paper: {
+      padding: theme.spacing(1),
+      margin: 'auto',
+      maxWidth: 1000,
+      maxHeight: 580,
+    },
+    image: {
+      width: 330,
+      height: 550,
+    },
+    img: {
+      margin: 'auto',
+      display: 'block',
+      maxWidth: '100%',
+      maxHeight: '100%',
+    },
+    thumbnail: {
+      height: 40,
+      width: 40,
+    },
+    back: {
+      margin: theme.spacing(1, 0, 2,),
+      backgroundColor: "black",
+      color: "white",
+    },
+    edit: {
+      margin: theme.spacing(1, 1, 2,),
+      backgroundColor: "black",
+      color: "white",
+    },
+    form: {
+      '& > *': {
+        margin: theme.spacing(1),
+        width: '75ch',
       },
-      paper: {
-        padding: theme.spacing(1),
-        margin: 'auto',
-        maxWidth: 1000,
-        maxHeight: 580,
-      },
-      image: {
-        width: 330,
-        height: 550,
-      },
-      img: {
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-      },
-      thumbnail: {
-          height: 40,
-          width: 40,
-      },
-      back: {
-          margin: theme.spacing(1, 0, 2,),
-          backgroundColor: "black",
-          color: "white",
-      },
-      edit: {
-          margin: theme.spacing(1, 1, 2,),
-          backgroundColor: "black",
-          color: "white",
-      },
-      form: {
-          '& > *': {
-            margin: theme.spacing(1),
-            width: '75ch',
-          },
-      }
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    frienddrop: {
+      marginTop: theme.spacing(-1),
+      marginBottom: theme.spacing(1)
+    }
   }));
 
 function UndrawnSingleCustomReading() {
-    const [question, setQuestion] = React.useState("")
+    const [question, setQuestion] = useState("")
+    const [friendFirstName, setFriendFirstName] = useState("")
+    const [friendLastName, setFriendLastName] = useState("")
     const [isLoading, setIsLoading] = useState(false);
-    const [checked, setChecked] = React.useState(true);
+    const [checked, setChecked] = useState(true);
+    const [open, setOpen] = useState(false);
+    const [friends, setFriends] = useState([])
+    const [selectedFriend, setSelectedFriend] = useState('');
     
     const user = useSelector(state => state.loggedInUser)
+    const dispatch = useDispatch();
+    const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
 
     const classes = useStyles();
     const history = useHistory();
@@ -96,35 +132,126 @@ function UndrawnSingleCustomReading() {
         setChecked((prev) => !prev);
     };
 
-    function handleChange(e) {
+    function handleQuestionChange(e) {
         // setQuestion({ ...question, [e.target.name]: e.target.value})
         setQuestion(e.target.value)
     }
 
-    function handleSingleCustomDrawing(e) {
+    function handleFriendFirstNameChange(e) {
+      // setQuestion({ ...question, [e.target.name]: e.target.value})
+      setFriendFirstName(e.target.value)
+  }
+
+    function handleFriendLastNameChange(e) {
+        // setQuestion({ ...question, [e.target.name]: e.target.value})
+        setFriendLastName(e.target.value)
+    }
+
+    const handleFriendChange = (event) => {
+      setSelectedFriend(event.target.value);
+    };
+  
+    const handleClose = () => {
+        setOpen(false);
+      };
+  
+    const handleOpen = () => {
+        setOpen(true);
+      };
+
+    useEffect(() => {
+        fetch(`http://localhost:3000/${user.id}/friends`)
+            .then(r => r.json())
+            .then(data => {
+                setFriends(data)
+                // setChartView(data.filter((reading) => reading.drawing_type === "Daily Drawing"))
+                // console.log(data)
+            }
+        )
+    }, [])      
+
+    function handleFriendSave(e) {
         e.preventDefault();
-        setIsLoading(true);
-        async function dailyReadingCreate() {
-            const res = await fetch("http://localhost:3000/readings", {
+
+        async function friendSave() {
+            const res = await fetch(`http://localhost:3000/friends`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    read_requester_id: user.id,
-                    read_requester_type: "PersonalProfile",
-                    reader_id: user.id,
-                    reader_type: "PersonalProfile",
-                    drawing_type: "Custom Drawing",
-                    question: question
-                    // rating: "TBD"
+                    public_profile_id: user.id,
+                    first_name: friendFirstName,
+                    last_name: friendLastName,
                 })
             })
 
             if(res.ok) {
-                const reading = await res.json()
-                cardDrawingCreate(reading)
+                const newFriend = await res.json()
+                setFriends([...friends, newFriend])
+                // setSelectedFriend(`${newFriend.first_name + " " + newFriend.last_name}`)
+                setSelectedFriend('')
+                // history.push(`/single`)
             }
+        }
+        friendSave();
+    }
+
+
+    
+
+    function handleSingleCustomDrawing(e) {
+        e.preventDefault();
+        if(selectedFriend === '' || selectedFriend === 'Add Friend +') {
+            console.log("No friend selected")
+        } else {
+        
+        setIsLoading(true);
+        async function dailyReadingCreate() {
+            if(personalProfileToggledOn) {
+                const res = await fetch("http://localhost:3000/readings", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        read_requester_id: user.id,
+                        read_requester_type: "PersonalProfile",
+                        reader_id: user.id,
+                        reader_type: "PersonalProfile",
+                        drawing_type: "Custom Drawing",
+                        question: question
+                        // rating: "TBD"
+                    })
+                })
+
+                if(res.ok) {
+                    const reading = await res.json()
+                    cardDrawingCreate(reading)
+                }
+            } else {
+                const res = await fetch("http://localhost:3000/readings", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        read_requester_id: selectedFriend.id,
+                        read_requester_type: "Friend",
+                        reader_id: user.id,
+                        reader_type: "PublicProfile",
+                        drawing_type: "Custom Drawing",
+                        question: question
+                        // rating: "TBD"
+                    })
+                })
+
+                if(res.ok) {
+                    const reading = await res.json()
+                    cardDrawingCreate(reading)
+                }
+            }
+
         }
 
         async function cardDrawingCreate(reading) {
@@ -147,6 +274,7 @@ function UndrawnSingleCustomReading() {
 
         handleFadeChange();
         dailyReadingCreate()
+        }
     }
 
     return (
@@ -160,24 +288,99 @@ function UndrawnSingleCustomReading() {
                             <Grid item xs container direction="column" spacing={2}>
                                 <Grid item xs>                     
                                     <form className={classes.form} onSubmit={handleSingleCustomDrawing}>
-                                        <TextField
-                                            id="outlined-multiline-flexible"
-                                            label="Enter the question you'd like to ask for this reading"
-                                            multiline
-                                            maxRows={4}
-                                            // value={question}
-                                            onChange={handleChange}
-                                            variant="outlined"
-                                            placeholder="Enter your question"
-                                            name="rating"
-                                        />
+                                        {personalProfileToggledOn ? 
+                                            <TextField
+                                                id="outlined-multiline-flexible"
+                                                label="Enter the question you'd like to ask for this reading"
+                                                multiline
+                                                maxRows={4}
+                                                // value={question}
+                                                onChange={handleQuestionChange}
+                                                variant="outlined"
+                                                placeholder="Enter your question"
+                                                name="rating"
+                                            />
+                                        :
+                                            <>
+                                            <div className={classes.frienddrop}>
+                                                <FormControl required className={classes.formControl}>
+                                                    <InputLabel id="demo-controlled-open-select-label">Select a friend</InputLabel>
+                                                    <Select
+                                                        labelId="demo-controlled-open-select-label"
+                                                        id="demo-controlled-open-select"
+                                                        open={open}
+                                                        onClose={handleClose}
+                                                        onOpen={handleOpen}
+                                                        value={selectedFriend}
+                                                        onChange={handleFriendChange}
+                                                    >                                   
+                                                        {friends.map((friend) => (
+                                                            <MenuItem value={friend}>{friend.first_name} {friend.last_name}</MenuItem>
+                                                        ))}                                                
+                                                            <MenuItem value={"Add Friend +"}>
+                                                                <em>Add Friend +</em>
+                                                            </MenuItem>
+                                                            {/* <MenuItem value={10}>Ten</MenuItem>
+                                                            <MenuItem value={20}>Twenty</MenuItem>
+                                                            <MenuItem value={30}>Thirty</MenuItem> */}
+                                                    </Select>
+                                                </FormControl>
+                                            </div>
+                                            <TextField
+                                                id="outlined-multiline-flexible"
+                                                label="Enter the question your friend would like to ask for this reading"
+                                                multiline
+                                                maxRows={4}
+                                                // value={question}
+                                                onChange={handleQuestionChange}
+                                                variant="outlined"
+                                                placeholder="Enter your question"
+                                                name="rating"
+                                            />
+                                            </>
+                                        }
                                     </form>
+                                    
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
+                
                 </Paper>
+                
             </Fade>
+            {selectedFriend === "Add Friend +" ? 
+                                    <Paper className={classes.paper}>
+                                    <h1>Add a friend</h1>
+                                    <form className={classes.form} onSubmit={handleFriendSave}>                
+                                        <TextField
+                                            id="outlined-multiline-flexible"
+                                            label="Enter Your Friend's First Name"
+                                            multiline
+                                            maxRows={4}
+                                            // value={question}
+                                            onChange={handleFriendFirstNameChange}
+                                            variant="outlined"
+                                            placeholder="First Name"
+                                            name="rating"
+                                        />
+                                        <TextField
+                                            id="outlined-multiline-flexible"
+                                            label="Enter Your Friend's Last Name"
+                                            multiline
+                                            maxRows={4}
+                                            // value={question}
+                                            onChange={handleFriendLastNameChange}
+                                            variant="outlined"
+                                            placeholder="Last Name"
+                                            name="rating"
+                                        />
+                                        <Button type="submit" value={isLoading ? "Loading..." : "Save"} className={classes.edit}>
+                                            Save
+                                        </Button>
+                                    </form>
+                                    </Paper>
+                                    : null}
             </ThemeProvider>
         </div>
         <Fade in={checked}>
