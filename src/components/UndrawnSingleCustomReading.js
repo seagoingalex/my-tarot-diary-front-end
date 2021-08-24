@@ -203,7 +203,7 @@ function UndrawnSingleCustomReading() {
     function handleSingleCustomDrawing(e) {
         e.preventDefault();
         if(!personalProfileToggledOn && selectedFriend === '' || selectedFriend === 'Add Friend +') {
-            console.log("No friend selected")
+            window.alert("You must select a friend prior to drawing a card on their behalf.")
         } else {
         setIsLoading(true);
         async function dailyReadingCreate() {
