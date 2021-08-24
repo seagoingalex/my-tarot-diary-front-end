@@ -102,7 +102,7 @@ function Chart() {
     };
 
     useEffect(() => {
-        fetch(`http://localhost:3000/${user.id}/chart`)
+        fetch(`http://localhost:3000/${user.id}/personal-chart`)
             .then(r => r.json())
             .then(data => {
                 setChart(data)

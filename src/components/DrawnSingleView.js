@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom"
 
+//Redux
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoggedInUser, togglePersonalProfile } from '../store/reducers/reducerSlice'
+
 // Material UI imports
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -68,7 +72,10 @@ function DrawnSingleView() {
     const [reading, setReading] = useState([])
     const [cards, setCards] = useState([])
     const [card, setCard] = useState([])
-    const [checked, setChecked] = React.useState(false);
+    const [checked, setChecked] = useState(false);
+    const [friend, setFriend] = useState([])
+
+    const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
 
     const { id } = useParams()
 
@@ -83,6 +90,9 @@ function DrawnSingleView() {
                 setReading(data)
                 setCard(data.cards[0])
                 setChecked(true)
+                setFriend(data.read_requester)
+                console.log(data.read_requester.first_name)
+                console.log(data.read_requester.last_name)
             })
     }, [id])
 
@@ -97,9 +107,15 @@ function DrawnSingleView() {
                   <Grid item xs={12} sm container>
                     <Grid item xs container direction="column" spacing={2}>
                       <Grid item xs>
+                        {personalProfileToggledOn ? 
                         <Typography gutterBottom variant="subtitle1">
                           Question: {reading.question}
-                        </Typography>
+                        </Typography> :
+                        <Typography gutterBottom variant="subtitle1">
+                          {friend.first_name} {friend.last_name}'s Question: {reading.question}
+                      </Typography>
+                        }
+                        
                         <Typography gutterBottom variant="subtitle1">
                           You drew: {card.name} | {card.arcana_type} Arcana
                         </Typography>

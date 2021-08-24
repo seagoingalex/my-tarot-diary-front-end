@@ -228,7 +228,7 @@ function NavBar() {
                 {list('left')}
               </Drawer>
               <Typography variant="h6" className={classes.title}>
-                Welcome to My Daily Tarot, {user.first_name}!
+                Welcome to My Daily Tarot, {user.first_name}! {personalProfileToggledOn ? "Personal" : "Public"}
               </Typography>
               <Button onClick={() => dispatch(togglePersonalProfile(!personalProfileToggledOn))} color="inherit">Switch Profiles</Button>
             </Toolbar>
