@@ -105,12 +105,15 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 function UndrawnSingleCustomReading() {
-    const [question, setQuestion] = React.useState("")
+    const [question, setQuestion] = useState("")
+    const [friendFirstName, setFriendFirstName] = useState("")
+    const [friendLastName, setFriendLastName] = useState("")
     const [isLoading, setIsLoading] = useState(false);
-    const [checked, setChecked] = React.useState(true);
-    const [open, setOpen] = React.useState(false);
+    const [checked, setChecked] = useState(true);
+    const [open, setOpen] = useState(false);
     const [friends, setFriends] = useState([])
-    const [selectedFriend, setSelectedFriend] = React.useState('');
+    const [selectedFriend, setSelectedFriend] = useState('');
+    const [addFriendSelected, selectAddFriend] = useState(false)
     
     const user = useSelector(state => state.loggedInUser)
     const dispatch = useDispatch();
@@ -128,6 +131,17 @@ function UndrawnSingleCustomReading() {
         setQuestion(e.target.value)
     }
 
+    function handleFriendFirstNameChange(e) {
+        // setQuestion({ ...question, [e.target.name]: e.target.value})
+        setFriendFirstName(e.target.value)
+    }
+
+    function handleFriendLastNameChange(e) {
+        // setQuestion({ ...question, [e.target.name]: e.target.value})
+        setFriendLastName(e.target.value)
+    }
+
+
     const handleFriendChange = (event) => {
         setSelectedFriend(event.target.value);
       };
@@ -140,6 +154,10 @@ function UndrawnSingleCustomReading() {
         setOpen(true);
       };
 
+    const handleAddFriendSelected = () => {
+        selectAddFriend(true)
+    }
+
     useEffect(() => {
         fetch(`http://localhost:3000/${user.id}/friends`)
             .then(r => r.json())
@@ -149,7 +167,38 @@ function UndrawnSingleCustomReading() {
                 // console.log(data)
             }
         )
-    }, [])      
+    }, [friends])      
+
+    function handleFriendSave(e) {
+        console.log("this worked")
+        e.preventDefault();
+
+        async function friendSave() {
+            const res = await fetch(`http://localhost:3000/friends`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    public_profile_id: user.id,
+                    first_name: friendFirstName,
+                    last_name: friendLastName,
+                })
+            })
+
+            if(res.ok) {
+                const newFriend = await res.json()
+                setFriends([...friends, newFriend])
+                // setSelectedFriend(`${newFriend.first_name + " " + newFriend.last_name}`)
+                setSelectedFriend('')
+                // history.push(`/single`)
+            }
+        }
+        friendSave();
+    }
+
+
+    
 
     function handleSingleCustomDrawing(e) {
         e.preventDefault();
@@ -262,10 +311,10 @@ function UndrawnSingleCustomReading() {
                                                         {friends.map((friend) => (
                                                             <MenuItem value={friend}>{friend.first_name} {friend.last_name}</MenuItem>
                                                         ))}                                                
-                                                            {/* <MenuItem value="">
-                                                                <em>None</em>
+                                                            <MenuItem value={"Add Friend +"}>
+                                                                <em>Add Friend +</em>
                                                             </MenuItem>
-                                                            <MenuItem value={10}>Ten</MenuItem>
+                                                            {/* <MenuItem value={10}>Ten</MenuItem>
                                                             <MenuItem value={20}>Twenty</MenuItem>
                                                             <MenuItem value={30}>Thirty</MenuItem> */}
                                                     </Select>
@@ -285,12 +334,47 @@ function UndrawnSingleCustomReading() {
                                             </>
                                         }
                                     </form>
+                                    
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
+                
                 </Paper>
+                
             </Fade>
+            {selectedFriend === "Add Friend +" ? 
+                                    <Paper className={classes.paper}>
+                                    <h1>Add a friend</h1>
+                                    <form className={classes.form} onSubmit={handleFriendSave}>                
+                                        <TextField
+                                            id="outlined-multiline-flexible"
+                                            label="Enter Your Friend's First Name"
+                                            multiline
+                                            maxRows={4}
+                                            // value={question}
+                                            onChange={handleFriendFirstNameChange}
+                                            variant="outlined"
+                                            placeholder="First Name"
+                                            name="rating"
+                                        />
+                                        <TextField
+                                            id="outlined-multiline-flexible"
+                                            label="Enter Your Friend's Last Name"
+                                            multiline
+                                            maxRows={4}
+                                            // value={question}
+                                            onChange={handleFriendLastNameChange}
+                                            variant="outlined"
+                                            placeholder="Last Name"
+                                            name="rating"
+                                        />
+                                        <Button type="submit" value={isLoading ? "Loading..." : "Save"} className={classes.edit}>
+                                            Save
+                                        </Button>
+                                    </form>
+                                    </Paper>
+                                    : null}
             </ThemeProvider>
         </div>
         <Fade in={checked}>
