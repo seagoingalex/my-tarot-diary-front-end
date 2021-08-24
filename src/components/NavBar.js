@@ -219,6 +219,11 @@ function NavBar() {
         });
     }
 
+    function handleSwitchProfileClick() {
+        dispatch(togglePersonalProfile(!personalProfileToggledOn))
+        history.push('/profile')
+    }
+
     return (
       <>
         {/* Actual Appbar */}
@@ -236,7 +241,7 @@ function NavBar() {
               <Typography variant="h6" className={classes.title}>
                 Welcome to My Daily Tarot, {user.first_name}! {personalProfileToggledOn ? "Personal" : "Public"}
               </Typography>
-              <Button onClick={() => dispatch(togglePersonalProfile(!personalProfileToggledOn))} color="inherit">Switch Profiles</Button>
+              <Button onClick={() => handleSwitchProfileClick()} color="inherit">Switch Profiles</Button>
             </Toolbar>
           </AppBar>
         </ThemeProvider>
