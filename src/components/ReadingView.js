@@ -18,6 +18,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap/dist/css/bootstrap.css';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
+
 // Material UI carousel for multi card spread
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
@@ -188,7 +189,8 @@ function ReadingView() {
                                     <Typography gutterBottom variant="subtitle1">
                                         {cards[1] ? 
                                             `Current Card Selection: ${card.name} | ${card.arcana_type} Arcana`
-                                        : `You drew: ${card.name} | ${card.arcana_type} Arcana` }
+                                        : `You drew: ${card.name} | ${card.arcana_type} Arcana` 
+                                        }
                                     </Typography>
                                     <Typography variant="body2" gutterBottom>
                                         Rating: {reading.rating}

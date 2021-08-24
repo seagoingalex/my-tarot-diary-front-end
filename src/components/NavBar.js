@@ -1,9 +1,12 @@
+//React
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom"
 // import styled from "styled-components";
+
+//Redux
 import { useDispatch, useSelector } from 'react-redux'
-import { setLoggedInUser } from '../store/reducers/reducerSlice'
+import { setLoggedInUser, togglePersonalProfile } from '../store/reducers/reducerSlice'
 
 //NavBar Material UI components
 import { makeStyles } from '@material-ui/core/styles';
@@ -63,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
   iconColor: {
     color: "#444444",
+    disabled: true
   },
   // Drawer
   list: {
@@ -70,12 +74,13 @@ const useStyles = makeStyles((theme) => ({
   },
   fullList: {
     width: 'auto',
-  },
+  }
 }));
 
 function NavBar() {
     const dispatch = useDispatch();
     const loggedInUser = useSelector(state => state.loggedInUser)
+    const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
     
     const history = useHistory();
 
@@ -116,10 +121,18 @@ function NavBar() {
             </ListSubheader>
           }
         >
-                    <ListItem button component={Link} to="/">
+          {personalProfileToggledOn ? 
+                    <ListItem  button component={Link} to="/">
               <ListItemIcon className={classes.iconColor}><Brightness3Icon /></ListItemIcon>
               <ListItemText>Daily Reading</ListItemText>
             </ListItem>
+
+            :
+            <ListItem  disabled={true} button component={Link} to="/">
+              <ListItemIcon className={classes.iconColor}><Brightness3Icon /></ListItemIcon>
+              <ListItemText>Daily Reading</ListItemText>
+            </ListItem>
+          }
           <ListItem button component={Link} to="/single">
               <ListItemIcon className={classes.iconColor}><PanToolIcon /></ListItemIcon>
               <ListItemText>Single Card Drawing</ListItemText>
@@ -217,7 +230,7 @@ function NavBar() {
               <Typography variant="h6" className={classes.title}>
                 Welcome to My Daily Tarot, {user.first_name}!
               </Typography>
-              <Button color="inherit">Switch Profiles</Button>
+              <Button onClick={() => dispatch(togglePersonalProfile(!personalProfileToggledOn))} color="inherit">Switch Profiles</Button>
             </Toolbar>
           </AppBar>
         </ThemeProvider>
