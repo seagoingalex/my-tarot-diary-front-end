@@ -168,7 +168,7 @@ function UndrawnSingleCustomReading() {
                 // console.log(data)
             }
         )
-    }, [friends])      
+    }, [])      
 
     function handleFriendSave(e) {
         e.preventDefault();
@@ -202,6 +202,10 @@ function UndrawnSingleCustomReading() {
 
     function handleSingleCustomDrawing(e) {
         e.preventDefault();
+        if(selectedFriend === '' || selectedFriend === 'Add Friend +') {
+            console.log("No friend selected")
+        } else {
+        
         setIsLoading(true);
         async function dailyReadingCreate() {
             if(personalProfileToggledOn) {
@@ -247,6 +251,7 @@ function UndrawnSingleCustomReading() {
                     cardDrawingCreate(reading)
                 }
             }
+
         }
 
         async function cardDrawingCreate(reading) {
@@ -269,6 +274,7 @@ function UndrawnSingleCustomReading() {
 
         handleFadeChange();
         dailyReadingCreate()
+        }
     }
 
     return (

@@ -22,6 +22,7 @@ import Brightness3Icon from '@material-ui/icons/Brightness3';
 import ViewWeekIcon from '@material-ui/icons/ViewWeek';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import Fade from '@material-ui/core/Fade';
+import GroupIcon from '@material-ui/icons/Group';
 
 //React Bootstrap imports
 import Spinner from 'react-bootstrap/Spinner';
@@ -184,7 +185,7 @@ function PublicChart() {
                                 textColor="secondary"
                                 aria-label="icon label tabs example"
                             >
-                                <Tab icon={<ViewWeekIcon />} label="FRIEND READINGS" />
+                                <Tab icon={<GroupIcon />} label="FRIEND READINGS" />
                             </Tabs>
                         </Paper>
                         {chartView.map((reading) => (
