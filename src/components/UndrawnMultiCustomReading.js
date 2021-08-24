@@ -228,8 +228,8 @@ function UndrawnMultiCustomReading() {
                     cardDrawingCreate(reading, firstCardData)
                     cardDrawingCreate(reading, secondCardData)
                     cardDrawingCreate(reading, thirdCardData)
-                    // history.push(`/chart/${reading.id}`)
-                    history.push(`/chart/`)
+                    history.push(`/chart/${reading.id}`)
+                    // history.push(`/chart/`)
                 }
             } else {
                 const res = await fetch("http://localhost:3000/readings", {
@@ -253,15 +253,15 @@ function UndrawnMultiCustomReading() {
                       cardDrawingCreate(reading, firstCardData)
                       cardDrawingCreate(reading, secondCardData)
                       cardDrawingCreate(reading, thirdCardData)
-                      // history.push(`/chart/${reading.id}`)
-                      history.push(`/chart/`)
+                      history.push(`/chart/${reading.id}`)
+                      // history.push(`/chart/`)
                   } else if(res.ok && !personalProfileToggledOn) {
                       const reading = await res.json()
                       cardDrawingCreate(reading, firstCardData)
                       cardDrawingCreate(reading, secondCardData)
                       cardDrawingCreate(reading, thirdCardData)
-                      // history.push(`/chart/${reading.id}`)
-                      history.push(`/friend-chart/`)
+                      history.push(`/chart/${reading.id}`)
+                      // history.push(`/friend-chart/`)
                   }
             }
         }
