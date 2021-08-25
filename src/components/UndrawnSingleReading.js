@@ -70,8 +70,9 @@ function UndrawnSingleReading() {
     return (
         <>
         <Fade in={checked}>
+        
             <div className="container">
-                {/* <h1> Draw your Daily Tarot. </h2> */}
+                
                 <img onClick={handleDailyDrawing} className={"undrawn-card"} src={cardBack} />
             </div>
         </Fade>
