@@ -155,7 +155,7 @@ function NavBar() {
             <ListItemIcon className={classes.iconColor}><MenuBookIcon /></ListItemIcon>
             <ListItemText>Tarot Library</ListItemText>
           </ListItem>
-          <ListItem>
+          <ListItem button component={Link} to="/about">
             <ListItemIcon className={classes.iconColor}><InfoIcon /></ListItemIcon>
             <ListItemText>About</ListItemText>
           </ListItem>

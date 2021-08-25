@@ -9,6 +9,7 @@ import { changeUsernameInput, changePasswordInput, setLoggedInUser } from '../st
 // Child component imports
 import NavBar from "./NavBar";
 import Home from "./Home";
+import About from "./About";
 import Profile from "./Profile";
 import Chart from "./Chart";
 import PublicChart from "./PublicChart"
@@ -77,15 +78,21 @@ function App() {
       <Route path="/profile">
         <Profile></Profile>
       </Route>
+      <Route path="/about">
+        <About></About>
+      </Route>
       <Route exact path="/chart">
         <Chart></Chart>
-      </Route>
-      <Route exact path="/friend-chart">
-        <PublicChart></PublicChart>
       </Route>
       <Route exact path="/chart/:id">
         <ReadingView></ReadingView>
       </Route>
+      <Route exact path="/friend-chart">
+        <PublicChart></PublicChart>
+      </Route>
+      {/* <Route exact path="/friend-chart/:id">
+        <ReadingView></ReadingView>
+      </Route> */}
       <Route path="/chart/:id/edit">
         <ReadingEdit></ReadingEdit>
       </Route>

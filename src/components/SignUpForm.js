@@ -131,7 +131,7 @@ function SignUpForm() {
                 const user = await res.json()
                 console.log(user)
                 dispatch(setLoggedInUser(user))
-                history.push("/")
+                history.push("/about")
             } else {
                 const err = await res.json()
                 setErrors(err.errors)
