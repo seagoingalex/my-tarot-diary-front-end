@@ -69,10 +69,8 @@ function UndrawnSingleReading() {
 
     return (
         <>
-        <Fade in={checked}>
-        
-            <div className="container">
-                
+        <Fade in={checked}>        
+            <div className="container">                
                 <img onClick={handleDailyDrawing} className={"undrawn-card"} src={cardBack} />
             </div>
         </Fade>

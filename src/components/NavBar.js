@@ -28,22 +28,16 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import InfoIcon from '@material-ui/icons/Info';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
-import TableChartIcon from '@material-ui/icons/TableChart';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import BallotIcon from '@material-ui/icons/Ballot';
 import Brightness3Icon from '@material-ui/icons/Brightness3';
-import Filter1Icon from '@material-ui/icons/Filter1';
-import Filter3Icon from '@material-ui/icons/Filter3';
 import PanToolIcon from '@material-ui/icons/PanTool';
 import ViewWeekIcon from '@material-ui/icons/ViewWeek';
 import PersonIcon from '@material-ui/icons/Person';
-import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
+//Component-specific font theme and styling
 const fontTheme = createTheme({
   typography: {
     fontFamily: [
@@ -79,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
 
 function NavBar() {
     const dispatch = useDispatch();
-    const loggedInUser = useSelector(state => state.loggedInUser)
     const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
     
     const history = useHistory();
@@ -190,23 +183,9 @@ function NavBar() {
             <ListItemIcon className={classes.iconColor}><ExitToAppIcon /></ListItemIcon>
             <ListItemText>Log out</ListItemText>
           </ListItem>
-        </List>
-        
-        
-        
-        
+        </List>                        
       </div>
     );
-
-    // const NavUnlisted = styled.ul`
-    //     text-decoration: none;
-    // `;
-
-    // const linkStyle = {
-    //     margin: "1rem",
-    //     textDecoration: "none",
-    //     color: 'blue'
-    //   };
     
     function handleLogoutClick() {
         fetch("http://localhost:3000/logout", { method: "DELETE" }).then((r) => {
@@ -226,7 +205,7 @@ function NavBar() {
 
     return (
       <>
-        {/* Actual Appbar */}
+        {/* Actual Appbar  */}
         <div className={classes.root}>
         <ThemeProvider theme={fontTheme}>
           <CssBaseline />
@@ -246,9 +225,8 @@ function NavBar() {
           </AppBar>
         </ThemeProvider>
         </div>
-        
       </>
-      );
+    );
 }
 
 export default NavBar;

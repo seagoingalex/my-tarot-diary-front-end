@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom"
 
 //Redux
-import { useDispatch, useSelector } from 'react-redux'
-import { setLoggedInUser, togglePersonalProfile } from '../store/reducers/reducerSlice'
+import { useSelector } from 'react-redux'
 
 //Material UI imports
 import { makeStyles } from '@material-ui/core/styles';
@@ -47,9 +46,6 @@ const fontTheme = createTheme({
     container: {
       display: 'flex',
       marginTop: theme.spacing(-12),  
-    },
-    paper: {
-    //   margin: theme.spacing(1),
     },
     svg: {
       width: 100,
@@ -122,7 +118,6 @@ function UndrawnSingleCustomReading() {
     const [selectedFriend, setSelectedFriend] = useState('');
     
     const user = useSelector(state => state.loggedInUser)
-    const dispatch = useDispatch();
     const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
 
     const classes = useStyles();
@@ -188,12 +183,11 @@ function UndrawnSingleCustomReading() {
 
             if(res.ok) {
                 const newFriend = await res.json()
-                setFriends([...friends, newFriend])
-                // setSelectedFriend(`${newFriend.first_name + " " + newFriend.last_name}`)
-                setSelectedFriend('')
-                // history.push(`/single`)
+                setFriends([...friends, newFriend])                
+                setSelectedFriend('')                
             }
         }
+
         friendSave();
     }
 
@@ -219,8 +213,7 @@ function UndrawnSingleCustomReading() {
                         reader_id: user.id,
                         reader_type: "PersonalProfile",
                         drawing_type: "Custom Drawing",
-                        question: question
-                        // rating: "TBD"
+                        question: question                    
                     })
                 })
 
@@ -240,8 +233,7 @@ function UndrawnSingleCustomReading() {
                         reader_id: user.id,
                         reader_type: "PublicProfile",
                         drawing_type: "Custom Drawing",
-                        question: question
-                        // rating: "TBD"
+                        question: question                        
                     })
                 })
 
@@ -272,7 +264,7 @@ function UndrawnSingleCustomReading() {
         }
 
         handleFadeChange();
-        dailyReadingCreate()
+        dailyReadingCreate();
         }
     }
 
@@ -303,7 +295,7 @@ function UndrawnSingleCustomReading() {
                                             <>
                                             <div className={classes.frienddrop}>
                                                 <FormControl required className={classes.formControl}>
-                                                    <InputLabel id="demo-controlled-open-select-label">Select a friend</InputLabel>
+                                                    <InputLabel id="demo-controlled-open-select-label">Select friend</InputLabel>
                                                     <Select
                                                         labelId="demo-controlled-open-select-label"
                                                         id="demo-controlled-open-select"
@@ -318,10 +310,7 @@ function UndrawnSingleCustomReading() {
                                                         ))}                                                
                                                             <MenuItem value={"Add Friend +"}>
                                                                 <em>Add Friend +</em>
-                                                            </MenuItem>
-                                                            {/* <MenuItem value={10}>Ten</MenuItem>
-                                                            <MenuItem value={20}>Twenty</MenuItem>
-                                                            <MenuItem value={30}>Thirty</MenuItem> */}
+                                                            </MenuItem>                     
                                                     </Select>
                                                 </FormControl>
                                             </div>
@@ -338,15 +327,12 @@ function UndrawnSingleCustomReading() {
                                             />
                                             </>
                                         }
-                                    </form>
-                                    
+                                    </form>                                    
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                
-                </Paper>
-                
+                </Paper>                
             </Fade>
             {selectedFriend === "Add Friend +" ? 
                                     <Paper className={classes.paper}>

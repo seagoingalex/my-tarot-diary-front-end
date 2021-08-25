@@ -81,11 +81,8 @@ function Chart() {
     const [chartView, setChartView] = useState(null)
     const [checked, setChecked] = useState(false);
     const [value, setValue] = useState(0);
-    const [chartVersion, setChartVersion] = useState('')
 
     const user = useSelector(state => state.loggedInUser)
-    const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
-
     const classes = useStyles();
 
     const handleTabChange = (e, newValue) => {
@@ -97,9 +94,10 @@ function Chart() {
                 return reading.drawing_type === "Custom Drawing"
             }
         })
+
         setDailyDrawView(!dailyDrawView);
-        setValue(newValue)
-        setChartView(selectedReadingType)
+        setValue(newValue);
+        setChartView(selectedReadingType);
     };
 
     useEffect(() => {
@@ -120,54 +118,6 @@ function Chart() {
         </Spinner>
         </>
     );
-
-    // if (!chart) return <h2>Loading...</h2>
-
-    // if(!personalProfileToggledOn) {
-    //     return (
-    //         <>
-    //         <ThemeProvider theme={fontTheme}>
-    //             <Fade in={checked}>
-    //                 <div className={classes.demo}>
-    //                     <Paper square className={classes.tabroot}>
-    //                         <Tabs
-    //                             value={value}
-    //                             onChange={handleTabChange}
-    //                             variant="fullWidth"
-    //                             indicatorColor="secondary"
-    //                             textColor="secondary"
-    //                             aria-label="icon label tabs example"
-    //                         >
-    //                             <Tab icon={<ViewWeekIcon />} label="FRIEND READINGS" />
-    //                         </Tabs>
-    //                     </Paper>
-    //                     {chartView.map((reading) => (
-    //                         <List className={classes.root}>
-    //                             <ListItem>
-    //                                 <ListItemAvatar>
-    //                                     <img className={classes.thumbnail} src={reading.cards[0].suit_thumbnail}></img>
-    //                                 </ListItemAvatar>
-    //                                 {reading.cards[1] ? 
-    //                                     <ListItemText primary={reading.created_at.substring(0,10) + " | Multi"} secondary={reading.read_requester.first_name + " " + reading.read_requester.last_name + " | " +  reading.question.substring(0,14) + "..."} />
-    //                                 : 
-    //                                     <ListItemText primary={reading.created_at.substring(0,10) + " | Single"} secondary={reading.read_requester.first_name + " " + reading.read_requester.last_name + " | " +  reading.question.substring(0,14) + "..."}/>
-    //                                 }
-    //                                 <ListItemSecondaryAction>
-    //                                     Rating: {reading.rating}
-    //                                     <IconButton component={Link} to={`/chart/${reading.id}`} edge="end" aria-label="delete">
-    //                                         <DoubleArrowIcon />
-    //                                     </IconButton>
-    //                                 </ListItemSecondaryAction>                            
-    //                             </ListItem>
-    //                             <Divider></Divider>
-    //                         </List>
-    //                     ))}
-    //                 </div>
-    //             </Fade>
-    //         </ThemeProvider>
-    //         </>
-    //     );
-    // }
 
     if(dailyDrawView) {
         return (

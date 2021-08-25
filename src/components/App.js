@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
 //Redux
-import { useDispatch, useSelector } from 'react-redux'
-import { changeUsernameInput, changePasswordInput, setLoggedInUser } from '../store/reducers/reducerSlice'
+import { useSelector } from 'react-redux'
+import { setLoggedInUser } from '../store/reducers/reducerSlice'
 
 // Child component imports
 import NavBar from "./NavBar";
@@ -14,7 +14,6 @@ import Profile from "./Profile";
 import Chart from "./Chart";
 import PublicChart from "./PublicChart"
 import CardList from "./CardList";
-import Cards from "./Cards";
 import CardView from "./CardView";
 import ReadingView from "./ReadingView";
 import ReadingEdit from "./ReadingEdit";
@@ -33,9 +32,6 @@ import './App.css';
 //Material UI imports
 
 function App() {
-  // const dispatch = useDispatch();
-  const usernameInput = useSelector(state => state.usernameInput)
-  const passwordInput = useSelector(state => state.passwordInput)
   const loggedInUser = useSelector(state => state.loggedInUser)
 
   useEffect(() => {
@@ -61,47 +57,43 @@ function App() {
 
   return (
     <>
-    <NavBar></NavBar>
+    <NavBar />
     <Switch>
       <Route exact path="/">
-        <Home></Home>
+        <Home />
       </Route>
       <Route exact path="/single">
-        <UndrawnSingleCustomReading></UndrawnSingleCustomReading>
+        <UndrawnSingleCustomReading />
       </Route>
       <Route exact path="/multi">
-        <UndrawnMultiCustomReading></UndrawnMultiCustomReading>
+        <UndrawnMultiCustomReading />
       </Route>
       <Route exact path="/readings/:id">
-        <DrawnSingleView></DrawnSingleView>
+        <DrawnSingleView />
       </Route>
       <Route path="/profile">
-        <Profile></Profile>
+        <Profile />
       </Route>
       <Route path="/about">
-        <About></About>
+        <About />
       </Route>
       <Route exact path="/chart">
-        <Chart></Chart>
+        <Chart />
       </Route>
       <Route exact path="/chart/:id">
-        <ReadingView></ReadingView>
+        <ReadingView />
       </Route>
       <Route exact path="/friend-chart">
-        <PublicChart></PublicChart>
+        <PublicChart />
       </Route>
-      {/* <Route exact path="/friend-chart/:id">
-        <ReadingView></ReadingView>
-      </Route> */}
       <Route path="/chart/:id/edit">
-        <ReadingEdit></ReadingEdit>
+        <ReadingEdit />
       </Route>
       <Route exact path="/library">
-        {/* <Cards></Cards> */}
-        <CardList></CardList>
+        <CardList />
       </Route>
       <Route path="/library/:id">
-        <CardView></CardView>
+        <CardView />
       </Route>
     </Switch>
     </>

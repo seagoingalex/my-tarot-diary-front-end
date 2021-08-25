@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom"
 
 //Redux
-import { useDispatch, useSelector } from 'react-redux'
-import { setLoggedInUser, togglePersonalProfile } from '../store/reducers/reducerSlice'
+import { useSelector } from 'react-redux'
 
 // Material UI imports
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,7 +18,6 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 //Component-specific font theme and styling
 
@@ -76,11 +74,8 @@ function DrawnSingleView() {
     const [friend, setFriend] = useState([])
 
     const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
-
     const { id } = useParams()
-
     const history = useHistory();
-
     const classes = useStyles();
 
     useEffect(() => {
@@ -99,54 +94,55 @@ function DrawnSingleView() {
     if (!reading && !cards) return <h2>Loading...</h2>
 
     return (
+        <>
         <div className={classes.root}>
-          <ThemeProvider theme={fontTheme}>
-            <Fade in={checked}>
-              <Paper className={classes.paper}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm container>
-                    <Grid item xs container direction="column" spacing={2}>
-                      <Grid item xs>
-                        {personalProfileToggledOn ? 
-                        <Typography gutterBottom variant="subtitle1">
-                          Question: {reading.question}
-                        </Typography> :
-                        <Typography gutterBottom variant="subtitle1">
-                          {friend.first_name} {friend.last_name}'s Question: {reading.question}
-                      </Typography>
-                        }
-                        
-                        <Typography gutterBottom variant="subtitle1">
-                          You drew: {card.name} | {card.arcana_type} Arcana
-                        </Typography>
-                        <Typography variant="body2" gutterBottom>
-                            {card.meaning_up}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          {card.desc_up}
-                        </Typography>
-                        <Button onClick={() => history.goBack()} className={classes.back}>
-                          Go Back
-                        </Button>
-                        <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
-                          New Entry
-                        </Button>
-                      </Grid>
-
-                    </Grid>
-                  </Grid>
+            <ThemeProvider theme={fontTheme}>
                 <Fade in={checked}>
-                  <Grid item>
-                    <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
-                      <img className={classes.img} alt="complex" src={card.img} />
-                    </ButtonBase>
-                  </Grid>
+                    <Paper className={classes.paper}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm container>
+                                <Grid item xs container direction="column" spacing={2}>
+                                    <Grid item xs>
+                                        {personalProfileToggledOn ? 
+                                            <Typography gutterBottom variant="subtitle1">
+                                                Question: {reading.question}
+                                            </Typography> 
+                                        :
+                                            <Typography gutterBottom variant="subtitle1">
+                                                {friend.first_name} {friend.last_name}'s Question: {reading.question}
+                                            </Typography>
+                                        }                        
+                                        <Typography gutterBottom variant="subtitle1">
+                                            You drew: {card.name} | {card.arcana_type} Arcana
+                                        </Typography>
+                                        <Typography variant="body2" gutterBottom>
+                                            {card.meaning_up}
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary">
+                                            {card.desc_up}
+                                        </Typography>
+                                        <Button onClick={() => history.goBack()} className={classes.back}>
+                                            Go Back
+                                        </Button>
+                                        <Button component={Link} to={`/chart/${reading.id}/edit`} className={classes.edit}>
+                                            New Entry
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Fade in={checked}>
+                                <Grid item>
+                                    <ButtonBase component={Link} to={`/library/${card.id}`} className={classes.image}>
+                                        <img className={classes.img} alt="complex" src={card.img} />
+                                    </ButtonBase>
+                                </Grid>
+                            </Fade>
+                        </Grid>
+                    </Paper>
                 </Fade>
-                </Grid>
-              </Paper>
-            </Fade>
-          </ThemeProvider>
+            </ThemeProvider>
         </div>
+        </>
     );
 }
 

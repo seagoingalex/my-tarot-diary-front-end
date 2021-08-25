@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
           borderColor: 'black',
         },
       },
-      width: '100%', // Fix IE 11 issue.
+      width: '100%', 
       marginTop: theme.spacing(1),
       color: "black",
       focused: "black",
@@ -110,7 +110,6 @@ function LoginForm() {
     const dispatch = useDispatch();
     const usernameInput = useSelector(state => state.usernameInput)
     const passwordInput = useSelector(state => state.passwordInput)
-    const loggedInUser = useSelector(state => state.loggedInUser)
 
     const handleUsernameChange = (e) => {
       dispatch(changeUsernameInput(e.target.value))
@@ -147,70 +146,68 @@ function LoginForm() {
     }
 
     return (
-      <>
-      
+        <>
         <Grid container component="main" className={classes.root}>
-          <ThemeProvider theme={fontTheme}>
-          <CssBaseline />
-          <Grid item xs={false} sm={4} md={7} className={classes.image} />
+        <ThemeProvider theme={fontTheme}>
+        <CssBaseline />
+            <Grid item xs={false} sm={4} md={7} className={classes.image} />
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-              <div className={classes.paper}>
-                <Avatar src={avatar} className={classes.large} ></Avatar>          
-                <Typography component="h1" variant="h5">
-                  My Tarot Diary
-                </Typography>
-                <form onSubmit={handleSubmit} className={classes.form} noValidate>
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="username"
-                    label="Username"
-                    name="username"
-                    autoComplete="username"
-                    autoFocus
-                    onChange={handleUsernameChange}
-                  />
-                  <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    onChange={handlePasswordChange}
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                  //   color="primary"
-                    className={classes.submit}
-                  >
-                    {isLoading ? "Loading..." : "Sign in"}
-                  </Button>
-                  <Grid container>
-                    {/* <Grid item xs>
-                      <Link href="#" variant="body2">
-                        Forgot password?
-                      </Link>
-                    </Grid> */}
-                    <Grid item>
-                      <Link href="/signup" variant="body2" className={classes.hyperlink}>
-                        {"Don't have an account? Sign Up"}
-                      </Link>
-                    </Grid>
-                  </Grid>
-                </form>
-              </div>
+                <div className={classes.paper}>
+                    <Avatar src={avatar} className={classes.large} />
+                    <Typography component="h1" variant="h5">
+                        My Tarot Diary
+                    </Typography>
+                    <form onSubmit={handleSubmit} className={classes.form} noValidate>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
+                            autoFocus
+                            onChange={handleUsernameChange}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            onChange={handlePasswordChange}
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"                      
+                            className={classes.submit}
+                        >
+                            {isLoading ? "Loading..." : "Sign in"}
+                        </Button>
+                        <Grid container>
+                            {/* <Grid item xs>
+                              <Link href="#" variant="body2">
+                                Forgot password?
+                              </Link>
+                            </Grid> */}
+                            <Grid item>
+                                <Link href="/signup" variant="body2" className={classes.hyperlink}>
+                                    {"Don't have an account? Sign Up"}
+                                </Link>
+                            </Grid>
+                        </Grid>
+                    </form>
+                </div>
             </Grid>
-          </ThemeProvider>
-        </Grid>
-      </>
+            </ThemeProvider>
+        </Grid>            
+        </>
     )
 }
 

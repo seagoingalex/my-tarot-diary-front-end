@@ -167,9 +167,7 @@ function UndrawnMultiCustomReading() {
         fetch(`http://localhost:3000/${user.id}/friends`)
             .then(r => r.json())
             .then(data => {
-                setFriends(data)
-                // setChartView(data.filter((reading) => reading.drawing_type === "Daily Drawing"))
-                // console.log(data)
+                setFriends(data)          
             }
         )
     }, []) 
@@ -193,9 +191,7 @@ function UndrawnMultiCustomReading() {
             if(res.ok) {
                 const newFriend = await res.json()
                 setFriends([...friends, newFriend])
-                // setSelectedFriend(`${newFriend.first_name + " " + newFriend.last_name}`)
                 setSelectedFriend('')
-                // history.push(`/single`)
             }
         }
         friendSave();
@@ -218,8 +214,7 @@ function UndrawnMultiCustomReading() {
                         reader_id: user.id,
                         reader_type: "PersonalProfile",
                         drawing_type: "Custom Drawing",
-                        question: question
-                        // rating: "TBD"
+                        question: question                        
                     })
                 })
 
@@ -228,8 +223,7 @@ function UndrawnMultiCustomReading() {
                     cardDrawingCreate(reading, firstCardData)
                     cardDrawingCreate(reading, secondCardData)
                     cardDrawingCreate(reading, thirdCardData)
-                    history.push(`/chart/${reading.id}`)
-                    // history.push(`/chart/`)
+                    history.push(`/chart/${reading.id}`)                    
                 }
             } else {
                 const res = await fetch("http://localhost:3000/readings", {
@@ -243,8 +237,7 @@ function UndrawnMultiCustomReading() {
                           reader_id: user.id,
                           reader_type: "PublicProfile",
                           drawing_type: "Custom Drawing",
-                          question: question
-                          // rating: "TBD"
+                          question: question                          
                       })
                   })
 
@@ -282,8 +275,9 @@ function UndrawnMultiCustomReading() {
                 const drawing = await res.json()
             }
         }
+
         handleFadeChange();
-        customReadingCreate()
+        customReadingCreate();
     }
 
     function handleFirstCardClick() {
@@ -299,7 +293,8 @@ function UndrawnMultiCustomReading() {
           }
         })
       }
-      cardCreate()
+
+      cardCreate();
     }
 
     function handleSecondCardClick() {
@@ -316,7 +311,8 @@ function UndrawnMultiCustomReading() {
           }
         })
       }
-      cardCreate()
+
+      cardCreate();
     }
 
     function handleThirdCardClick() {
@@ -333,7 +329,8 @@ function UndrawnMultiCustomReading() {
           }
         })
       }
-      cardCreate()
+
+      cardCreate();
     }
     
     return (
@@ -363,7 +360,7 @@ function UndrawnMultiCustomReading() {
                                 <>
                                 <div className={classes.frienddrop}>
                                     <FormControl required className={classes.formControl}>
-                                        <InputLabel id="demo-controlled-open-select-label">Select a friend</InputLabel>
+                                        <InputLabel id="demo-controlled-open-select-label">Select friend</InputLabel>
                                         <Select
                                             labelId="demo-controlled-open-select-label"
                                             id="demo-controlled-open-select"
@@ -379,12 +376,6 @@ function UndrawnMultiCustomReading() {
                                                 <MenuItem value={"Add Friend +"}>
                                                     <em>Add Friend +</em>
                                                 </MenuItem>
-                                                {/* <MenuItem value="">
-                                                    <em>None</em>
-                                                </MenuItem>
-                                                <MenuItem value={10}>Ten</MenuItem>
-                                                <MenuItem value={20}>Twenty</MenuItem>
-                                                <MenuItem value={30}>Thirty</MenuItem> */}
                                         </Select>
                                     </FormControl>
                                 </div>
@@ -403,12 +394,10 @@ function UndrawnMultiCustomReading() {
                             }
                             
                             { firstCardData && secondCardData && thirdCardData ? 
-                              <Button type="submit" value={isLoading ? "Loading..." : "Save"} className={classes.edit}>
-                                Save
-                              </Button> 
-                            : null }
-                            
-                            
+                                <Button type="submit" value={isLoading ? "Loading..." : "Save"} className={classes.edit}>
+                                    Save
+                                </Button> 
+                            : null }                                                      
                         </form>
                       </Grid>
                     </Grid>
@@ -448,8 +437,6 @@ function UndrawnMultiCustomReading() {
                                     </form>
                                     </Paper>
                                     : null}
-
-
             </ThemeProvider>
         </div>
         <Fade in={checked}>

@@ -104,8 +104,8 @@ function CardList() {
   const [isLoading, setLoading] = React.useState(false)
   const [checked, setChecked] = React.useState(false);
 
-
   const classes = useStyles();
+  const dispatch = useDispatch();
   const cards = useSelector((state) => state.entities);
 
   const cardItems = cards
@@ -115,8 +115,6 @@ function CardList() {
       .filter((card) => {
         return card.name.toLowerCase().includes(cardSearch.toLowerCase());
       })
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCards())
@@ -161,7 +159,6 @@ function CardList() {
                     <Fade in={checked}>
                       <Grid key={card.id} item>
                         <Link to={`/library/${card.id}`}>
-                          {/* <Paper className={classes.paper}></Paper> */}
                             <img  className={classes.paper} key={card.id} src={card.img} alt="card" value={card.id}/>
                         </Link>
                       </Grid>
