@@ -137,7 +137,7 @@ function Profile() {
                                         {user.email}
                                     </h3>    
                                     {/* </Typography> */}
-                                    <Button onClick={() => history.goBack()} className={classes.back}>
+                                    <Button onClick={() => window.alert("Edit capabilities to be built once username validations are in place. Stay tuned!")} className={classes.back}>
                                         Edit
                                     </Button>
                                 </Grid>
