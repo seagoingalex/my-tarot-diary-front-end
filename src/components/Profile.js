@@ -93,16 +93,11 @@ const useStyles = makeStyles(theme => ({
   }));
 
 function Profile() {
-    const dispatch = useDispatch();
+    const [checked, setChecked] = useState(true);
+
     const user = useSelector(state => state.loggedInUser)
     const username = useSelector(state => state.usernameInput)
     const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
-
-    const [card, setCard] = useState(null);
-    const [checked, setChecked] = React.useState(true);
-
-    const { id } = useParams()
-    const history = useHistory();
     const classes = useStyles();
 
     return (
@@ -116,50 +111,41 @@ function Profile() {
                         <Grid item xs={12} sm container>
                             <Grid item xs container direction="column" spacing={2}>
                                 <Grid item xs>
-                                    { personalProfileToggledOn ? 
-                                    // <Typography gutterBottom variant="subtitle1">
-                                    <h1 className={classes.h1} style={{color: "black"}}>
-                                        {user.first_name} {user.last_name} | Personal
-                                    </h1>
-                                    
+                                    { personalProfileToggledOn ?                                     
+                                        <h1 className={classes.h1} style={{color: "black"}}>
+                                            {user.first_name} {user.last_name} | Personal
+                                        </h1>                                        
                                     :
-                                    <h1 className={classes.h1} style={{color: "black"}}>
-                                        {user.first_name} {user.last_name} | Public
-                                    </h1>
+                                        <h1 className={classes.h1} style={{color: "black"}}>
+                                            {user.first_name} {user.last_name} | Public
+                                        </h1>
                                     }
-                                    {/* <Typography variant="body2" gutterBottom> */}
                                     <h2 className={classes.h2}>
                                         Username: {username}
-                                    </h2>
-                                    {/* </Typography> */}
-                                    {/* <Typography variant="body2" color="textSecondary"> */}
+                                    </h2>                                    
                                     <h3 className={classes.h3}>
                                         {user.email}
-                                    </h3>    
-                                    {/* </Typography> */}
+                                    </h3>                                        
                                     <Button onClick={() => window.alert("Edit capabilities to be built once username validations are in place. Stay tuned!")} className={classes.back}>
                                         Edit
                                     </Button>
                                 </Grid>
-                            </Grid>
-                            {/* <Grid item>
-                                <Typography variant="subtitle1"> <img className={classes.thumbnail} src={card.suit_thumbnail} /></Typography>
-                            </Grid> */}
+                            </Grid>                            
                         </Grid>
                         { personalProfileToggledOn ? 
-                        <Grid item>
-                            {/* <ButtonBase className={classes.image}>
-                            <img className={classes.img} alt="complex" src={cardBack} />
-                            </ButtonBase> */}
-                            <Brightness3Icon className={classes.icon}></Brightness3Icon>
-                        </Grid>
+                            <Grid item>
+                                {/* <ButtonBase className={classes.image}>
+                                <img className={classes.img} alt="complex" src={cardBack} />
+                                </ButtonBase> */}
+                                <Brightness3Icon className={classes.icon}></Brightness3Icon>
+                            </Grid>
                         :
-                        <Grid item>
-                            {/* <ButtonBase className={classes.image}>
-                            <img className={classes.img} alt="complex" src={cardBack} />
-                            </ButtonBase> */}
-                            <GroupIcon className={classes.icon}></GroupIcon>
-                        </Grid>
+                            <Grid item>
+                                {/* <ButtonBase className={classes.image}>
+                                <img className={classes.img} alt="complex" src={cardBack} />
+                                </ButtonBase> */}
+                                <GroupIcon className={classes.icon}></GroupIcon>
+                            </Grid>
                         }   
                     </Grid>
                 </Paper>
@@ -168,7 +154,6 @@ function Profile() {
         </div>
         </>
     )
-
 }
 
 export default Profile

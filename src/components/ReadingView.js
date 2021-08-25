@@ -17,8 +17,6 @@ import Typography from "@material-ui/core/Typography";
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
 import Fade from '@material-ui/core/Fade';
-import Spinner from 'react-bootstrap/Spinner';
-import 'bootstrap/dist/css/bootstrap.css';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -28,6 +26,10 @@ import ImageListItem from '@material-ui/core/ImageListItem';
 import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+
+//React Bootstrap imports
+import Spinner from 'react-bootstrap/Spinner';
+import 'bootstrap/dist/css/bootstrap.css';
 
 //Component-specific font theme and styling
 const fontTheme = createTheme({
@@ -112,7 +114,6 @@ function ReadingView() {
     const [checked, setChecked] = React.useState(false);
 
     const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
-
     const { id } = useParams()
     const history = useHistory();
     const classes = useStyles();
@@ -137,8 +138,7 @@ function ReadingView() {
         </>
     );
 
-    function handleDestroy() {
-        
+    function handleDestroy() {        
         async function deleteReading() {
             const res = await fetch(`/readings/${reading.id}`, {
                 method: 'DELETE'
@@ -182,8 +182,7 @@ function ReadingView() {
                     </ImageList>
                 </div>
             </Fade>
-        : null }
-        
+        : null }        
         <div className={classes.root}>
             <ThemeProvider theme={fontTheme}>
             <CssBaseline />

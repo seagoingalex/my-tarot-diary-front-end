@@ -84,9 +84,6 @@ function PublicChart() {
     const [value, setValue] = React.useState(0);
 
     const user = useSelector(state => state.loggedInUser)
-    const personalProfileToggledOn = useSelector(state => state.personalProfileToggledOn)
-    
-
     const classes = useStyles();
 
     const handleTabChange = (e, newValue) => {
@@ -98,19 +95,17 @@ function PublicChart() {
                 return reading.drawing_type === "Custom Drawing"
             }
         })
+
         setDailyDrawView(!dailyDrawView);
-        setValue(newValue)
-        setChartView(selectedReadingType)
+        setValue(newValue);
+        setChartView(selectedReadingType);
     };
 
     useEffect(() => {
         fetch(`http://localhost:3000/${user.id}/public-chart`)
             .then(r => r.json())
             .then(data => {
-                // setChart(data)
-                // setChartView(data.filter((reading) => reading.drawing_type === "Custom Drawing"))
-                setChartView(data.filter((reading) => reading.read_requester_type === "Friend"))
-                // setChartView(data)
+                setChartView(data.filter((reading) => reading.read_requester_type === "Friend"))                
                 setChecked(true)
                 console.log(data)
             }
@@ -125,96 +120,49 @@ function PublicChart() {
         </>
     );
 
-    // if (!chart) return <h2>Loading...</h2>
-
-    // if(dailyDrawView) {
-    //     return (
-    //         <>
-    //         <ThemeProvider theme={fontTheme}>   
-    //             <Fade in={checked}>
-    //                 <div className={classes.demo}>
-    //                     <Paper square className={classes.tabroot}>
-    //                         <Tabs
-    //                             value={value}
-    //                             onChange={handleTabChange}
-    //                             variant="fullWidth"
-    //                             indicatorColor="secondary"
-    //                             textColor="secondary"
-    //                             aria-label="icon label tabs example"
-    //                         >
-    //                             <Tab disabled={true} icon={<Brightness3Icon />} label="DAILY DRAWS" />
-    //                             <Tab icon={<ViewWeekIcon />} label="FRIEND READINGS" />
-    //                         </Tabs>
-    //                     </Paper>
-    //                     {chartView.map((reading) => (
-    //                         <List className={classes.root}>
-    //                             <ListItem>
-    //                                 <ListItemAvatar>
-    //                                     <img className={classes.thumbnail} src={reading.cards[0].suit_thumbnail}></img>
-    //                                 </ListItemAvatar>
-    //                                 <ListItemText primary={reading.cards[0].name} secondary={reading.created_at.substring(0,10)} />
-    //                                 <ListItemSecondaryAction>
-    //                                     Rating: {reading.rating}
-    //                                     <IconButton component={Link} to={`/chart/${reading.id}`} edge="end" aria-label="delete">
-    //                                         <DoubleArrowIcon />
-    //                                     </IconButton>
-    //                                 </ListItemSecondaryAction>        
-    //                             </ListItem>
-    //                             <Divider></Divider>
-    //                         </List>
-    //                     ))}
-    //                 </div>
-    //             </Fade>
-    //         </ThemeProvider>
-    //         </>
-    //     );
-    // }
-
-    // else {
-        return (
-            <>
-            <ThemeProvider theme={fontTheme}>
-                <Fade in={checked}>
-                    <div className={classes.demo}>
-                        <Paper square className={classes.tabroot}>
-                            <Tabs
-                                value={value}
-                                onChange={handleTabChange}
-                                variant="fullWidth"
-                                indicatorColor="secondary"
-                                textColor="secondary"
-                                aria-label="icon label tabs example"
-                            >
-                                <Tab icon={<GroupIcon />} label="FRIEND READINGS" />
-                            </Tabs>
-                        </Paper>
-                        {chartView.map((reading) => (
-                            <List className={classes.root}>
-                                <ListItem>
-                                    <ListItemAvatar>
-                                        <img className={classes.thumbnail} src={reading.cards[0].suit_thumbnail}></img>
-                                    </ListItemAvatar>
-                                    {reading.cards[1] ? 
-                                        <ListItemText primary={reading.created_at.substring(0,10) + " | Multi"} secondary={reading.read_requester.first_name + " " + reading.read_requester.last_name + " | " +  reading.question.substring(0,14) + "..."} />
-                                    : 
-                                        <ListItemText primary={reading.created_at.substring(0,10) + " | Single"} secondary={reading.read_requester.first_name + " " + reading.read_requester.last_name + " | " +  reading.question.substring(0,14) + "..."}/>
-                                    }
-                                    <ListItemSecondaryAction>
-                                        Rating: {reading.rating}
-                                        <IconButton component={Link} to={`/chart/${reading.id}`} edge="end" aria-label="delete">
-                                            <DoubleArrowIcon />
-                                        </IconButton>
-                                    </ListItemSecondaryAction>                            
-                                </ListItem>
-                                <Divider></Divider>
-                            </List>
-                        ))}
-                    </div>
-                </Fade>
-            </ThemeProvider>
-            </>
-        );
-    // }
+    return (
+        <>
+        <ThemeProvider theme={fontTheme}>
+            <Fade in={checked}>
+                <div className={classes.demo}>
+                    <Paper square className={classes.tabroot}>
+                        <Tabs
+                            value={value}
+                            onChange={handleTabChange}
+                            variant="fullWidth"
+                            indicatorColor="secondary"
+                            textColor="secondary"
+                            aria-label="icon label tabs example"
+                        >
+                            <Tab icon={<GroupIcon />} label="FRIEND READINGS" />
+                        </Tabs>
+                    </Paper>
+                    {chartView.map((reading) => (
+                        <List className={classes.root}>
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <img className={classes.thumbnail} src={reading.cards[0].suit_thumbnail}></img>
+                                </ListItemAvatar>
+                                {reading.cards[1] ? 
+                                    <ListItemText primary={reading.created_at.substring(0,10) + " | Multi"} secondary={reading.read_requester.first_name + " " + reading.read_requester.last_name + " | " +  reading.question.substring(0,14) + "..."} />
+                                : 
+                                    <ListItemText primary={reading.created_at.substring(0,10) + " | Single"} secondary={reading.read_requester.first_name + " " + reading.read_requester.last_name + " | " +  reading.question.substring(0,14) + "..."}/>
+                                }
+                                <ListItemSecondaryAction>
+                                    Rating: {reading.rating}
+                                    <IconButton component={Link} to={`/chart/${reading.id}`} edge="end" aria-label="delete">
+                                        <DoubleArrowIcon />
+                                    </IconButton>
+                                </ListItemSecondaryAction>                            
+                            </ListItem>
+                            <Divider></Divider>
+                        </List>
+                    ))}
+                </div>
+            </Fade>
+        </ThemeProvider>
+        </>
+    );
 }
 
 export default PublicChart

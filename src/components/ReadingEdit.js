@@ -170,7 +170,6 @@ function ReadingEdit() {
                                     rows={7.5}
                                     fullWidth
                                 />
-
                             <Button type="submit" value={isLoading ? "Loading..." : "Save"} className={classes.edit}>
                             Save
                             </Button>
