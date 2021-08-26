@@ -63,6 +63,9 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1, 1, 2,),
         backgroundColor: "black",
         color: "white",
+    },
+    advice: {
+        marginTop: theme.spacing(1),
     }
   }));
 
@@ -120,6 +123,12 @@ function DrawnSingleView() {
                                         </Typography>
                                         <Typography variant="body2" color="textSecondary">
                                             {card.desc_up}
+                                        </Typography>
+                                        <Typography className={classes.advice} variant="body2" gutterBottom>
+                                            Practical Advice:
+                                        </Typography>
+                                        <Typography variant="body2" color="textSecondary">
+                                            {card.advice}
                                         </Typography>
                                         <Button onClick={() => history.goBack()} className={classes.back}>
                                             Go Back

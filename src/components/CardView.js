@@ -63,6 +63,9 @@ const useStyles = makeStyles(theme => ({
         bottom: 0,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    advice: {
+        marginTop: theme.spacing(1),
     }
   }));
 
@@ -113,6 +116,12 @@ function CardView() {
                                     </Typography>
                                     <Typography variant="body2" color="textSecondary">
                                         {card.desc_up}
+                                    </Typography>
+                                    <Typography className={classes.advice} variant="body2" gutterBottom>
+                                        Practical Advice:
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                        {card.advice}
                                     </Typography>
                                     <Button onClick={() => history.goBack()} className={classes.back}>
                                         Go Back

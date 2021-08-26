@@ -155,7 +155,7 @@ function LoginForm() {
                 <div className={classes.paper}>
                     <Avatar src={avatar} className={classes.large} />
                     <Typography component="h1" variant="h5">
-                        My Tarot Diary
+                        Arcadia Daily Tarot
                     </Typography>
                     <form onSubmit={handleSubmit} className={classes.form} noValidate>
                         <TextField
