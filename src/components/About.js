@@ -231,8 +231,10 @@ function About() {
                             </Grid>                        
                         </Grid>                        
                         <Grid item>
-                            <ButtonBase component={Link} to={`/`} className={classes.image}>
+                            <ButtonBase  className={classes.image}>
+                                <a href="https://www.linkedin.com/in/alexandercalvert/" target="_blank">
                                 <img className={classes.img} alt="complex" src={profile} />
+                                </a>
                             </ButtonBase>
                         </Grid>
                     </Grid>
