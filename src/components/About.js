@@ -21,6 +21,7 @@ import Box from '@material-ui/core/Box';
 //Image imports
 // import cardBack from '../images/AReverseCard.PNG'
 import cardBack from '../images/card-back.jpeg'
+import profile from '../images/profile.jpg'
 
 //Component-specific font theme and styling
 const fontTheme = createTheme({
@@ -203,23 +204,35 @@ function About() {
                                         About the Developer
                                     </h1>
                                     <h3 className={classes.h3}>
-                                        Stuff about Alex
+                                        Alex Calvert (he/him)
                                     </h3>    
                                     <Typography className={classes.textarea} variant="body2" color="textSecondary">
-                                        Stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex.
+                                        Born in England and raised in Australia, I moved with my family to the Pacific Northwest in the early aughts, and have been here ever since. I've been lucky to call both Seattle and Portland my homes over the past twenty years, and in that time, have have the privilege of working with some of the most talented teams in tech at companies both large and small.
                                     </Typography>
                                     <Typography className={classes.textarea} variant="body2" color="textSecondary">
-                                        Stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex.
+                                        After seven successful years working in multiple roles in marketing, operations, and customer success, while also refining my capabilities as a manager of teams spanning from 3 to 13 talented individuals, I found myself compelled to take on a new kind of problem-solving, and reapproach the professional world I've come to love from a different perspective - a technical one.
                                     </Typography>
                                     <Typography className={classes.textarea} variant="body2" color="textSecondary">
-                                        Stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex stuff about Alex.
-                                    </Typography>                                
+                                        In the time since transitioning into software engineering, I've had the privilege of developing a whole new skillset that hopefully you've had a chance to enjoy through this app, while adapting the acumen I've attained in non-technical roles to approach programming from a unique perspective.
+                                    </Typography>  
+                                    <Typography className={classes.textarea} variant="body2" color="textSecondary">
+                                        Outside of software engineering, you'll typically find me playing board games, riding my motorcycle around the neighborhood, nose deep into this week's latest comic releases, or at the local arcade - as long as they have Ms. Pacman and Dig Dug, I'm a happy camper.
+                                    </Typography>         
+                                    <Typography className={classes.textarea} variant="body2" color="textSecondary">
+                                        I hope you enjoy the app, now get reading!
+                                    </Typography> 
+                                    <Typography className={classes.textarea} variant="body2" color="textSecondary">
+                                        Alex
+                                    </Typography> 
+                                    <Typography className={classes.textarea} variant="body2" color="textSecondary">
+                                        linkedin.com/in/alexandercalvert | alexanderajcalvert@gmail.com
+                                    </Typography>                                                  
                                 </Grid>
                             </Grid>                        
                         </Grid>                        
                         <Grid item>
                             <ButtonBase component={Link} to={`/`} className={classes.image}>
-                                <img className={classes.img} alt="complex" src={cardBack} />
+                                <img className={classes.img} alt="complex" src={profile} />
                             </ButtonBase>
                         </Grid>
                     </Grid>
