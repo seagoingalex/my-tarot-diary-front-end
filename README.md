@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+Arcadia Daily Tarot: A Tarot Card Library, Reader, and Diary Application
+Alex Calvert
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+!! Instructions for starting app !!
+1. In addition the the front-end directly you are currently accessing, be sure to also access the application's Ruby on Rails files: https://github.com/seagoingalex/my-tarot-diary-back-end
+2. In your terminal for the site backend, type 'rails s' into your terminal, followed by 'npm start' for this front end directory.
 
-## Available Scripts
+Resources
+- Entity Relationship Diagram (ERD): https://miro.com/app/board/o9J_l2gv54c=/
+- Site Schematic: https://www.figma.com/file/3PmGrkFQMxElvPleNR6mI7/Project-5-Wireframes?node-id=2287%3A5610
+- Project Plan: https://docs.google.com/document/d/13-mpM4ybFu8JN0C_xWklqb6Mi2_6BQzc2Ue2qkoHG8Y/edit?usp=sharing
 
-In the project directory, you can run:
+About this app
+The art of tarot reading is a centuries-old skill that can be rather difficult to approach, let alone practice. Just as software engineering requires repetition and consistency to mastery, so does the intuition-developing nature of divination. While iOS and Android apps such as Golden Thread exist, web-based applications are lacking, as are functionality in existing applications to take notes, customize, and read for others
 
-### `npm start`
+This full stack web application is designed as a modern and personal space to make the fun and joyful skill of tarot reading as approachable as any other hobby. By creating a password-secured profile, users can access a tarot database encompassing all cards within the major and minor arcana, a beginner’s guide to reading tarot, and a virtual deck where you can perform daily readings,  record multiple-card readings as they practice, and even document the readings of friends.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Technical specs
+- Front-end
+    - React Router
+    - React useHistory
+    - Tarot card library...
+        - Stored in backend database
+    - User profiles, readings, and friends all stored within backend server, accessible from the front-end through various CRUD endpoints
+    - Redux leveraged to manage global states of the logged in user and whether they are accessing their public or personal profile.
+    - Custom CSS via
+        - Styled-components
+        - Material UI (UI framework )
+- Backend
+    - Session Handling
+    - Serializers
+    - Exception Handling
+    - Validations: Controller & Model
+    - CRUD and custom actions within backend table controllers in MVC structure
+    - Auth via BCrypt
+    - Model includes multiple has_many: through: relationships 
+        - Dual polymorphic added to handle public/personal account switching
+    - Seeds from a complex dataset
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Feature Highlights
+- As an anonymous app visitor, I can…
+    - View the login page
+    - Log into the site as an existing user
+    - Sign up as a new user
+- As a user who is logged in, I can…
+    - Perform a daily tarot reading of a single card from the homepage
+        - That reading with automatically be added to my chart
+        - Click a card to learn more about that card specifically
+        - Update the entry immediately after drawing from the homepage
+    - Perform custom readings (beyond a daily reading) from the sidebar
+        - Do a single card reading at any point, regardless of whether or not I have done my daily drawing
+        - Do a a three-card draw as a custom reading
+    - Select My Chart to see a list of all readings I have done for myself
+        - Click on a reading instance to review the details of that reading
+        - Click a card to learn more about that card specifically
+        - Update my notes for that reading
+        - Delete readings from my Chart
+    - Access the tarot card library to learn about cards without doing a reading
+        - See a list of all cards in the major and minor arcana
+        - Click a card to learn more about that card specifically
+        - Search the tarot library that filters results onChange
+        - Search the tarot library by arcana / suit
+    - Switch between a personal profile to do readings for myself and a public profile to do readings for friends
+        - Update my profile information
+        - View the about page to learn more about the app creator
+    - Log out
+- As a user who is logged in to their personal profile, I can…
+    - Access all previous readings performed for myself from my Chart
+    - Toggle between daily draws and custom readings
+- As a user who is logged in to their public profile, I can…
+    - NOT do a daily drawing; I must be signed into my personal profile to do a daily drawing
+    - Perform readings for friends from the homepage
+    - Select from a list of existing friends to do a reading for
+    - Add a new friend requesting a reading prior
+    - Access all previous readings performed for friends from my Chart
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Future feature builds
+- Change Password
+- Change tarot deck visuals from the profile page, persists in Redux as the global state for the deck design.
+- Only do a daily drawing once per day
+- Biforcate three card draws into past/present/future and situation/action/outcome draws
+- Do readings for other USERS instead of just the dummy data in the friends table.
+- Make the Friends Chart view on the Public account view searchable/filterable
 
-### `npm run build`
+Functionality Breakdown
+- Navigable tarot database
+    - MVP: fully rendered on page
+    - Stretch 1: Searchable on page
+    - Stretch 2: Filterable by suit on page
+- Daily reading
+    - MVP: Can be done and saved to log at any time
+    - Stretch 2: Can only be done and saved to log once a day (in tandem with custom reading enablement
+- Accessible & Editable log of readings
+    - MVP: Daily readings only
+    - Stretch 1: All readings
+    - Stretch 2: Separated chart section for public account vs personal account
+- Stretch: Custom readings
+    - MVP: Single card only
+    - Stretch 1: Custom single card draw (independent and typified separate from daily draws)
+    - Stretch 2: Three Card draw
+- Stretch: PublicReading role allows a separate instance of the user to read and log on behalf of others, completely independent from their own chart and reading
+- Stretch (WIP): Editable Profile Page
+    - Password change
+    - Stretch 1: Selectable deck options
+    - Stretch: Stats
+    - Number of readings
+    - Most drawn card
+    - Mood stat
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
