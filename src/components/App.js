@@ -43,6 +43,7 @@ function App() {
     })
   }, []);
 
+  // The following conditional ensures visitors can only see the Login/Sign up pages prior to login
   if (!loggedInUser) return (
     
     <Switch>

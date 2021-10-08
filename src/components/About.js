@@ -32,6 +32,7 @@ const fontTheme = createTheme({
     },
   });
 
+  // This is for the tabulation on the About page to allow users to tab between "About Tarot" and "About the Developer"
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
   

@@ -14,7 +14,6 @@ import { InputBase } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 //React Boostrap imports
 import Spinner from 'react-bootstrap/Spinner';
@@ -108,6 +107,7 @@ function CardList() {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.entities);
 
+  // Allows for the filtering of cards by suite, and searching (not case sensitive) via the search bar
   const cardItems = cards
       .filter((card) => {
         return suitFilter === "All" || card.suit === suitFilter;
@@ -116,6 +116,7 @@ function CardList() {
         return card.name.toLowerCase().includes(cardSearch.toLowerCase());
       })
 
+  // Fetches card data from Redux
   useEffect(() => {
     dispatch(fetchCards())
       .then(setLoading(true))

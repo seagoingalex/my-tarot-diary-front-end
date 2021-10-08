@@ -1,15 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"; 
 
-// async actions
-
+// async fetch for rendering card data when the tarot library is accessed
 export const fetchCards = createAsyncThunk("global/fetchCards", () => {
-    // return a Promise containing the data we want
     return fetch("http://localhost:3000/cards")
         .then((response) => response.json())
         .then((data) => data)
 })
 
-//slice
+// Slice created via Redux Toolkit. Used to manage 1) the current user logged in, 2) whether that user is accessing their personal or public profile, and 3) the loaded state for all card data.
 const slice = createSlice({
     name: 'global',
     initialState: {
@@ -45,32 +43,9 @@ const slice = createSlice({
     },
 })
 
-//actions
+// Destructured actions from above slice
 const { changeUsernameInput, changePasswordInput, setLoggedInUser, togglePersonalProfile } = slice.actions
 
-//exports
+// Export actions to allow app components to change relevant states
 export { changeUsernameInput, changePasswordInput, setLoggedInUser, togglePersonalProfile }
 export default slice.reducer
-
-// V Original walkthrough from Joe below
-// export const initialState = {
-//     usernameInput: "",
-//     passwordInput: ""
-// }
-
-// export const reducer = (state, action) => {
-//     switch (action.type) {
-//         case "CHANGE_USERNAME_INPUT":
-//             return {
-//                 ...state, usernameInput: action.payload
-//             }
-//             break;
-//         case "CHANGE_PASSWORD_INPUT":
-//             return {
-//                 ...state, passwordInput: action.payload
-//             }
-//             break;    
-//     }
-//     return state
-
-// }
